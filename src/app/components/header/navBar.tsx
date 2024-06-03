@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import Image from "next/image";
-import logo from "../../public/logo.png";
+import logo from "public/logo.png";
 import { Playfair_Display, Open_Sans, Roboto_Serif } from "next/font/google";
 import { CgMenuGridR } from "react-icons/cg";
 
