@@ -8,7 +8,7 @@ export default function AboutMe() {
           className={`flex flex-col text-center font-RobotoSerif text-[3.6rem] font-medium leading-snug max-[414px]:text-[3rem] max-[354px]:text-[2rem]`}
         >
           <span>
-            Hello<span className="font-OpenSans">!</span> I'm{" "}
+            Hello<span className="font-OpenSans">!</span> I'&apos;m{" "}
           </span>
           <span className="text-7xl font-semibold text-color10 max-[414px]:text-6xl max-[354px]:text-[2.6rem]">
             Arquímedes V.

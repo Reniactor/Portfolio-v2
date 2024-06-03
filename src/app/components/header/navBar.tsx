@@ -18,11 +18,11 @@ const accentFont = Open_Sans({
 
 const NavBar: React.FC = () => {
   const [isToggled, setIsToggled] = useState(true);
-  let sideMenu = useRef<HTMLUListElement>(null);
+  const sideMenu = useRef<HTMLUListElement>(null);
   const handleClick = () => {
     setIsToggled(!isToggled);
 
-    let shorthand = sideMenu.current?.classList;
+    const shorthand = sideMenu.current?.classList;
 
     if (isToggled) {
       shorthand?.remove("false");
