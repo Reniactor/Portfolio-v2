@@ -14,8 +14,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
-      <body>{children}</body>
+    <html lang="en" className="scroll-smooth">
+      <body className="flex flex-col items-center bg-color60 text-color30">
+        {children}
+      </body>
     </html>
   );
 }
