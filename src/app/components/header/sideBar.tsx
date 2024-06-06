@@ -12,7 +12,7 @@ const SideBar = ({
   handleClick,
 }: {
   visibility: boolean;
-  routes: any[];
+  routes: { name: string; route: string }[];
   handleClick: () => void;
 }) => {
   return (

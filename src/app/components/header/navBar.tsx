@@ -13,19 +13,9 @@ import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
 import Link from "next/link";
 import SideBar from "./sideBar";
 
-const headerFont = Roboto_Serif({
-  subsets: ["latin"],
-  variable: "--font-robotoSerif",
-});
-
 const roboto = Roboto({
   weight: ["100", "300", "400", "500", "700", "900"],
   subsets: ["latin"],
-});
-
-const accentFont = Open_Sans({
-  subsets: ["latin"],
-  variable: "--font-openSans",
 });
 
 const routes = [
@@ -49,7 +39,6 @@ const routes = [
 
 const NavBar: React.FC = () => {
   const [isToggled, setIsToggled] = useState(false);
-  const sideMenu = useRef<HTMLUListElement>(null);
   const handleClick = () => {
     setIsToggled(!isToggled);
   };
@@ -66,7 +55,7 @@ const NavBar: React.FC = () => {
       <div className="hidden w-80 justify-between md:flex">
         {routes.slice(1).map(({ name, route }) => {
           return (
-            <div className="w-fit">
+            <div className="w-fit" key={name}>
               <Link
                 href={route}
                 key={name}

@@ -9,26 +9,6 @@ import {
 } from "next/font/google";
 import { BsGithub, BsLinkedin } from "react-icons/bs";
 
-const anton = Anton({
-  weight: ["400"],
-  subsets: ["latin"],
-});
-
-const arimo = Arimo({
-  weight: ["400", "500", "600", "700"],
-  subsets: ["latin"],
-});
-
-const inter = Inter({
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  subsets: ["latin"],
-});
-
-const open_sans = Open_Sans({
-  weight: ["300", "400", "500", "600", "700", "800"],
-  subsets: ["latin"],
-});
-
 const lobster = Lobster({
   weight: ["400"],
   subsets: ["latin"],
@@ -36,11 +16,7 @@ const lobster = Lobster({
 
 const nunito_sans = Nunito_Sans({
   weight: ["200", "300", "400", "500", "600", "700", "800", "900", "1000"],
-  subsets: ["latin"],
-});
-
-const roboto = Roboto({
-  weight: ["100", "300", "400", "500", "700", "900"],
+  display: "swap",
   subsets: ["latin"],
 });
 

@@ -1,5 +1,4 @@
 import { BsGithub } from "react-icons/bs";
-import { CgMail } from "react-icons/cg";
 import { SiLinkedin, SiWhatsapp } from "react-icons/si";
 
 export default function ContactMe() {
