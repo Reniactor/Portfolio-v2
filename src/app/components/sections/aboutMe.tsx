@@ -1,40 +1,92 @@
+import {
+  Anton,
+  Arimo,
+  Inter,
+  Lobster,
+  Nunito_Sans,
+  Open_Sans,
+  Roboto,
+} from "next/font/google";
 import { BsGithub, BsLinkedin } from "react-icons/bs";
+
+const anton = Anton({
+  weight: ["400"],
+  subsets: ["latin"],
+});
+
+const arimo = Arimo({
+  weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+});
+
+const inter = Inter({
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  subsets: ["latin"],
+});
+
+const open_sans = Open_Sans({
+  weight: ["300", "400", "500", "600", "700", "800"],
+  subsets: ["latin"],
+});
+
+const lobster = Lobster({
+  weight: ["400"],
+  subsets: ["latin"],
+});
+
+const nunito_sans = Nunito_Sans({
+  weight: ["200", "300", "400", "500", "600", "700", "800", "900", "1000"],
+  subsets: ["latin"],
+});
+
+const roboto = Roboto({
+  weight: ["100", "300", "400", "500", "700", "900"],
+  subsets: ["latin"],
+});
 
 export default function AboutMe() {
   return (
-    <section id="aboutMe" className="mb-12 min-[805px]:pt-60">
-      <div className="grid grid-cols-1 grid-rows-3 gap-y-5">
-        <h1
-          className={`flex flex-col text-center font-RobotoSerif text-[3.6rem] font-medium leading-snug max-[414px]:text-[3rem] max-[354px]:text-[2rem]`}
-        >
-          <span>
-            Hello<span className="font-OpenSans">!</span> I&apos;m{" "}
+    <section
+      id="aboutMe"
+      className={`${nunito_sans.className} container mt-52 flex justify-center px-4 text-center`}
+    >
+      <div className="flex h-fit max-w-lg flex-col gap-y-8 lg:max-w-3xl">
+        <p className={`flex h-fit flex-col`} aria-label="Author introduction">
+          <span className="text-3xl font-medium min-[480px]:text-4xl lg:text-5xl xl:text-7xl">
+            Hello! I&apos;m{" "}
           </span>
-          <span className="text-7xl font-semibold text-color10 max-[414px]:text-6xl max-[354px]:text-[2.6rem]">
+          <span
+            className={`${lobster.className} text-4xl font-bold text-color10 min-[480px]:text-5xl lg:text-6xl xl:text-8xl`}
+          >
             Arquímedes V.
           </span>{" "}
-          a self taught web developer.
-        </h1>
-        <div className="grid w-full grid-cols-2 grid-rows-1 items-center justify-items-center">
+          <span className="text-2xl font-light min-[480px]:text-3xl lg:text-4xl xl:text-6xl">
+            a self taught web developer.
+          </span>
+        </p>
+        <div
+          className="flex justify-between"
+          aria-label="Social media links - Github - Linkedin"
+        >
           <a
             href="https://www.linkedin.com/in/arquimedes-vasquez-668964238/"
-            target={"_blank"}
+            target="_blank"
             rel="noopener noreferrer"
-            aria-label="LinkedIn-Personal-Website"
+            aria-label="LinkedIn Profile"
           >
-            <BsLinkedin className="h-28 w-auto text-color10 duration-300 hover:text-color30 max-[414px]:h-16 max-[300px]:h-12" />
+            <BsLinkedin className="h-auto w-10 text-color10 duration-200 hover:text-color30 min-[480px]:w-12 lg:w-14 xl:w-16" />
           </a>
           <a
             href="https://github.com/Reniactor"
-            target={"_blank"}
+            target="_blank"
             rel="noopener noreferrer"
-            aria-label="Github-Profile"
+            aria-label="Github Profile"
           >
-            <BsGithub className="h-28 w-auto text-color10 duration-300 hover:text-color30 max-[414px]:h-16 max-[300px]:h-12" />
+            <BsGithub className="h-auto w-10 text-color10 duration-200 hover:text-color30   min-[480px]:w-12 lg:w-14 xl:w-16" />
           </a>
         </div>
         <p
-          className={`px-2 text-center font-RobotoSerif text-3xl font-light max-[414px]:text-2xl max-[300px]:text-xl min-[805px]:w-[786px] min-[805px]:justify-self-center`}
+          className={`max-w-[30ch] text-lg font-light min-[480px]:text-2xl lg:max-w-prose xl:text-4xl`}
         >
           I strive to deliver an excellent product, it’s a top priority for me
           to provide a balance between a robust{" "}

@@ -4,10 +4,9 @@ import ContactMe from "./components/footer/contactMe";
 
 export default function HomePage() {
   return (
-    <main className="">
+    <main className="container">
       <NavBar />
       <AboutMe />
-      <ContactMe />
     </main>
   );
 }
