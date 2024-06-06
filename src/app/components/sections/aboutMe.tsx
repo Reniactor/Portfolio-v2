@@ -1,12 +1,4 @@
-import {
-  Anton,
-  Arimo,
-  Inter,
-  Lobster,
-  Nunito_Sans,
-  Open_Sans,
-  Roboto,
-} from "next/font/google";
+import { Lobster, Nunito_Sans } from "next/font/google";
 import { BsGithub, BsLinkedin } from "react-icons/bs";
 
 const lobster = Lobster({

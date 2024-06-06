@@ -21,7 +21,10 @@ const SideBar = ({
     >
       {routes.map(({ name, route }) => {
         return (
-          <div className="w-fit duration-200 hover:border-color10 hover:text-color10/90">
+          <div
+            className="w-fit duration-200 hover:border-color10 hover:text-color10/90"
+            key={name}
+          >
             <Link
               href={route}
               key={name}
