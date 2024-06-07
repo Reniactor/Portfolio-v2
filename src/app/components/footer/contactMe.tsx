@@ -1,15 +1,13 @@
+import { nunitoSans, roboto } from "@/utils/fontIndex";
 import { BsGithub } from "react-icons/bs";
 import { SiLinkedin, SiWhatsapp } from "react-icons/si";
 
 export default function ContactMe() {
   return (
-    <section
-      id="contactMe"
-      className="mb-14 flex h-fit w-full transform flex-col gap-y-4 transition-all duration-200"
-    >
+    <footer id="contactMe" className="">
       <h1 className="mb-4  ml-10 w-full font-OpenSans text-5xl font-bold max-[414px]:ml-2 max-[414px]:text-3xl md:ml-24 lg:ml-60">
         Contact{" "}
-        <span className="font-RobotoSerif text-[3.8rem] text-color10 max-[414px]:text-[2.5rem]">
+        <span className="font-RobotoSerif text-7xl text-color10 max-[414px]:text-[2.5rem]">
           me
         </span>
       </h1>
@@ -63,6 +61,6 @@ export default function ContactMe() {
                     <a href="mailto:arquimedes_elio16@hotmail.com" className="flex items-center color hover:text-color10 duration-200"><BsMailbox className="mr-1 text-color10" /> Mail</a>
                     </li> */}
       </ul>
-    </section>
+    </footer>
   );
 }

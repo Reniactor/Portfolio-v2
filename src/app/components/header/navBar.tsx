@@ -3,20 +3,10 @@
 import React, { useRef, useState } from "react";
 import Image from "next/image";
 import logo from "public/logo.png";
-import {
-  Playfair_Display,
-  Open_Sans,
-  Roboto_Serif,
-  Roboto,
-} from "next/font/google";
 import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
 import Link from "next/link";
-import SideBar from "./sideBar";
-
-const roboto = Roboto({
-  weight: ["100", "300", "400", "500", "700", "900"],
-  subsets: ["latin"],
-});
+import SideBar from "./headerComponents/sideBar";
+import { roboto } from "@/utils/fontIndex";
 
 const routes = [
   {
@@ -24,12 +14,12 @@ const routes = [
     route: "#about-me",
   },
   {
-    name: "Skills",
-    route: "#skills",
-  },
-  {
     name: "Projects",
     route: "#projects",
+  },
+  {
+    name: "Skills",
+    route: "#skills",
   },
   {
     name: "Contact me",
@@ -45,13 +35,15 @@ const NavBar: React.FC = () => {
 
   return (
     <header className="fixed left-0 top-0 flex h-20 w-full items-center justify-between px-2 backdrop-blur-sm md:px-4">
-      <Image
-        src={logo}
-        alt="Arquímedes Logo"
-        className="h-full w-auto"
-        draggable="false"
-        loading="lazy"
-      />
+      <Link href={"#about-me"} className="h-full" draggable="false">
+        <Image
+          src={logo}
+          alt="Arquímedes Logo"
+          className="h-full w-auto"
+          draggable="false"
+          loading="lazy"
+        />
+      </Link>
       <div className="hidden w-80 justify-between md:flex">
         {routes.slice(1).map(({ name, route }) => {
           return (
@@ -59,7 +51,7 @@ const NavBar: React.FC = () => {
               <Link
                 href={route}
                 key={name}
-                className={`${roboto.className} hover: text-lg font-medium uppercase duration-200 hover:text-color10/90`}
+                className={`${roboto.className} text-lg font-medium uppercase duration-200 hover:text-color10/90`}
               >
                 {name}
               </Link>

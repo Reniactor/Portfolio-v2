@@ -1,10 +1,5 @@
-import { Roboto } from "next/font/google";
+import { roboto } from "@/utils/fontIndex";
 import Link from "next/link";
-
-const roboto = Roboto({
-  weight: ["100", "300", "400", "500", "700", "900"],
-  subsets: ["latin"],
-});
 
 const SideBar = ({
   visibility,
