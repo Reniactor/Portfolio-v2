@@ -1,11 +1,9 @@
-import { Url } from "next/dist/shared/lib/router/router";
 import Image from "next/image";
 import Link from "next/link";
 import { AiOutlineEye } from "react-icons/ai";
 import { BiCodeAlt } from "react-icons/bi";
 import type { Project } from "../projectIndex";
-import { nunitoSans, roboto } from "@/utils/fontIndex";
-import tag from "./tag";
+import { roboto } from "@/utils/fontIndex";
 import Tag from "./tag";
 
 const ProjectCard = ({

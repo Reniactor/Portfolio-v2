@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import logo from "public/logo.png";
 import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";

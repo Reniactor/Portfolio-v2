@@ -1,5 +1,5 @@
-import { Url } from "next/dist/shared/lib/router/router";
-import { StaticImageData } from "next/image";
+import type { Url } from "next/dist/shared/lib/router/router";
+import type { StaticImageData } from "next/image";
 import digitalShieldImage from "public/digitalshield.jpg";
 import flockTravels from "public/flocktravels.jpg";
 import shouldWeDineThatToday from "public/shouldwedinethattoday.jpg";

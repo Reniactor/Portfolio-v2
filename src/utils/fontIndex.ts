@@ -1,5 +1,4 @@
 import { Lobster, Nunito_Sans, Roboto } from "next/font/google";
-import { CssVariable } from "next/dist/compiled/@next/font";
 //Lobster font declaration
 const lobster = Lobster({
   weight: ["400"],

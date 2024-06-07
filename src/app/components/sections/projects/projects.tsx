@@ -1,6 +1,5 @@
-import { lobster, nunitoSans, roboto } from "@/utils/fontIndex";
+import { nunitoSans } from "@/utils/fontIndex";
 import ProjectCard from "./projectsComponents/projectCard";
-import { Project } from "./projectIndex";
 import { projects } from "./projectIndex";
 
 const Projects = () => {
