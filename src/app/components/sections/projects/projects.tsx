@@ -7,7 +7,7 @@ const Projects = () => {
     <section
       id="projects"
       aria-labelledby="projects-section"
-      className={`${nunitoSans.className} container mt-60 flex min-h-screen flex-col gap-8 px-4 pt-20 font-bold`}
+      className={`${nunitoSans.className} container mt-60 flex min-h-screen flex-col gap-8 px-4 pt-36 font-bold`}
     >
       <header className="flex flex-col gap-2 2xl:px-4">
         <h1
@@ -33,6 +33,7 @@ const Projects = () => {
               image={project.image}
               title={project.title}
               stack={project.stack}
+              target={project?.target}
               briefDescription={project.briefDescription}
               linkToDemo={project.linkToDemo}
               linkToRepo={project.linkToRepo}

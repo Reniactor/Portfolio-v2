@@ -23,7 +23,7 @@ const SideBar = ({
             <Link
               href={route}
               key={name}
-              className={`${roboto.className} h-fit text-4xl font-semibold uppercase duration-200 focus:text-color10/90`}
+              className={`${roboto.className} h-fit text-3xl font-semibold uppercase tracking-tight duration-200 focus:text-color10/90`}
               onClick={handleClick}
             >
               {name}

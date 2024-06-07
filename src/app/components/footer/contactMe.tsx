@@ -2,64 +2,42 @@ import { nunitoSans, roboto } from "@/utils/fontIndex";
 import { BsGithub } from "react-icons/bs";
 import { SiLinkedin, SiWhatsapp } from "react-icons/si";
 
+const socials = [
+  {
+    icon: <BsGithub />,
+    link: "https://github.com/Reniactor",
+  },
+  {
+    icon: <SiLinkedin />,
+    link: "https://www.linkedin.com/in/arquimedes-vasquez-668964238/",
+  },
+  {
+    icon: <SiWhatsapp />,
+    link: "https://wa.me/+573014393346",
+  },
+];
+
 export default function ContactMe() {
   return (
-    <footer id="contactMe" className="">
-      <h1 className="mb-4  ml-10 w-full font-OpenSans text-5xl font-bold max-[414px]:ml-2 max-[414px]:text-3xl md:ml-24 lg:ml-60">
-        Contact{" "}
-        <span className="font-RobotoSerif text-7xl text-color10 max-[414px]:text-[2.5rem]">
-          me
-        </span>
+    <footer id="contactMe" className="min-h-96 space-y-2 px-4 py-4 2xl:px-8">
+      <h1 className={`${roboto.className} text-4xl font-bold tracking-tight`}>
+        Contact <span className="text-5xl text-color10">me</span>
       </h1>
-      <ul
-        className=" flex 
-                            w-full 
-                            justify-between 
-                            font-RobotoSerif 
-                            text-xl
-                            max-[414px]:text-xs  
-                            sm:text-2xl
-                            md:w-3/4
-                            md:justify-around  
-                            md:text-3xl 
-                            lg:justify-evenly"
-      >
-        <li>
-          <a
-            href="https://github.com/Reniactor"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="color flex items-center duration-200 hover:text-color10"
-          >
-            <BsGithub className="mr-1 text-color10" /> Github
-          </a>
-        </li>
-        <li>
-          <a
-            href="https://www.linkedin.com/in/arquimedes-vasquez-668964238/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="color flex items-center duration-200 hover:text-color10"
-          >
-            <SiLinkedin className="mr-1 text-color10" /> LinkedIn
-          </a>
-        </li>
-        <li>
-          <a
-            href="https://wa.me/+573015157686"
-            target={`_blank`}
-            className="color flex items-center duration-200 hover:text-color10"
-          >
-            <SiWhatsapp className="mr-1 text-color10" /> Whatsapp
-          </a>
-        </li>
-
-        {/* <li>
-                    <a href="#" target="_blank" rel="noopener noreferrer">Pending</a>
-                    </li> */}
-        {/* <li>
-                    <a href="mailto:arquimedes_elio16@hotmail.com" className="flex items-center color hover:text-color10 duration-200"><BsMailbox className="mr-1 text-color10" /> Mail</a>
-                    </li> */}
+      <ul className="flex gap-4">
+        {socials.map(({ icon, link }, index) => {
+          return (
+            <li key={index}>
+              <a
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
+                key={index}
+              >
+                {icon}
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </footer>
   );

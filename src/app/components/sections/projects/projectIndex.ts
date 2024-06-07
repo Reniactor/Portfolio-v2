@@ -3,11 +3,14 @@ import type { StaticImageData } from "next/image";
 import digitalShieldImage from "public/digitalshield.jpg";
 import flockTravels from "public/flocktravels.jpg";
 import shouldWeDineThatToday from "public/shouldwedinethattoday.jpg";
+import portfolio from "public/portfolio.jpg";
+
 export interface Project {
   image: StaticImageData;
   title: string;
   briefDescription: string;
-  stack?: string[];
+  stack: string[];
+  target?: string;
   linkToDemo?: Url;
   linkToRepo?: Url;
 }
@@ -16,11 +19,13 @@ export type Projects = Project[];
 
 export const projects: Projects = [
   {
-    image: digitalShieldImage,
-    title: "Digital Shield",
-    briefDescription: "Crypto Lockdown DApp",
-    stack: ["Next.js", "Firebase", "Tailwindcss", "Ethers.js", "Solidity"],
-    linkToDemo: "https://digital-shield.vercel.app",
+    image: portfolio,
+    title: "Arquimedes Vasquez",
+    briefDescription: "My portfolio",
+    stack: ["Next.js", "Tailwindcss", "Prisma", "Supabase", "Typescript"],
+    target: "_self",
+    linkToDemo: "#about-me",
+    linkToRepo: "https://github.com/Reniactor/Portfolio-v2",
   },
   {
     image: flockTravels,
@@ -37,5 +42,12 @@ export const projects: Projects = [
     stack: ["Next.js", "Tailwindcss"],
     linkToDemo: "https://should-we-dine-that-today.vercel.app",
     linkToRepo: "https://github.com/Reniactor/should-we-dine-that-today",
+  },
+  {
+    image: digitalShieldImage,
+    title: "Digital Shield",
+    briefDescription: "Crypto Lockdown DApp",
+    stack: ["Next.js", "Firebase", "Tailwindcss", "Ethers.js", "Solidity"],
+    linkToDemo: "https://digital-shield.vercel.app",
   },
 ];

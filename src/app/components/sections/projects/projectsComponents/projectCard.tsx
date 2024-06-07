@@ -11,6 +11,7 @@ const ProjectCard = ({
   briefDescription,
   title,
   stack,
+  target,
   linkToDemo,
   linkToRepo,
 }: Project) => {
@@ -25,7 +26,7 @@ const ProjectCard = ({
       </figure>
       <section
         aria-label="Project information"
-        className="flex h-full flex-col gap-1 p-6 pb-0 sm:gap-6"
+        className="flex h-full flex-col gap-1 p-6 pb-0 sm:gap-4"
       >
         <header>
           <h2
@@ -68,7 +69,7 @@ const ProjectCard = ({
             {linkToDemo ? (
               <Link
                 href={linkToDemo}
-                target="_blank"
+                target={target ? target : "_blank"}
                 className="h-6 w-6 text-color30"
                 aria-label={`Link to ${title} demo`}
               >
