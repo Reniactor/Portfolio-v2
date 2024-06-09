@@ -34,8 +34,8 @@ const technologies: technology[] = [
     language: "Solidity",
     description:
       "A high-level programming language for writing smart contracts",
-    status: "Active", // Add status if applicable
-    owner: "Solidity Labs", // Add owner if applicable
+    status: "Active",
+    owner: "Solidity Labs",
     createdAt: new Date("2014-08-07"),
     updatedAt: new Date("2024-05-21"),
   },
@@ -54,8 +54,8 @@ const technologies: technology[] = [
     language: "CSS",
     description:
       "Cascading Style Sheets used for styling web pages and web applications",
-    status: "",
-    owner: "",
+    status: "Active",
+    owner: "W3C",
     createdAt: new Date("1996-12-17"),
     updatedAt: new Date("2020-12-07"),
   },
@@ -131,7 +131,7 @@ const technologies: technology[] = [
     language: "PostgreSQL",
     description: "An open-source object-relational database management system",
     status: "Active",
-    owner: "",
+    owner: "OS Community",
     createdAt: new Date("1996-07-08"),
     updatedAt: new Date("2024-05-09"),
   },
