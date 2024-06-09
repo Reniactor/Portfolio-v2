@@ -18,7 +18,7 @@ export default function AboutMe() {
             Arquímedes V.
           </span>{" "}
           <span className="text-2xl font-light min-[480px]:text-3xl sm:text-4xl xl:text-6xl">
-            a self taught web developer.
+            a self-taught web developer.
           </span>
         </p>
         <div

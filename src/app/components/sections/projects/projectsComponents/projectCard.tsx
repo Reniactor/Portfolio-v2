@@ -60,7 +60,7 @@ const ProjectCard = ({
             ) : (
               <Link
                 href={""}
-                className="pointer-events-none h-6 w-6 hover:cursor-not-allowed"
+                className="pointer-events-none h-6 w-6"
                 aria-label={`No repo link available for ${title}`}
               >
                 <BiCodeAlt className="h-full w-full text-color30/45" />
@@ -78,7 +78,7 @@ const ProjectCard = ({
             ) : (
               <Link
                 href={""}
-                className="pointer-events-none h-6 w-6 hover:cursor-not-allowed"
+                className="pointer-events-none h-6 w-6"
                 aria-label={`No demo link available for ${title}`}
               >
                 <AiOutlineEye className="h-full w-full text-color30/45" />

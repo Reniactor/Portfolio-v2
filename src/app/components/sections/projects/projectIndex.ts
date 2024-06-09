@@ -5,6 +5,8 @@ import flockTravels from "public/flocktravels.jpg";
 import shouldWeDineThatToday from "public/shouldwedinethattoday.jpg";
 import portfolio from "public/portfolio.jpg";
 
+// defining the interface for each Project
+
 export interface Project {
   image: StaticImageData;
   title: string;
@@ -16,6 +18,9 @@ export interface Project {
 }
 
 export type Projects = Project[];
+
+// This array of objects is used to map over and create each project card
+// in the Projects section of the portfolio.
 
 export const projects: Projects = [
   {

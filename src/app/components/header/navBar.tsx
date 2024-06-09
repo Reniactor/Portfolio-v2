@@ -27,8 +27,12 @@ const routes = [
   },
 ];
 
+//TODO add a spreadable hover colouring effect on links that also resize the letter a little bit
+
 const NavBar: React.FC = () => {
   const [isToggled, setIsToggled] = useState(false);
+
+  //Simple useState toggling to handle the sidebar visibility
   const handleClick = () => {
     setIsToggled(!isToggled);
   };

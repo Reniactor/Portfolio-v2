@@ -2,17 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-::-webkit-scrollbar {
-  width: 6px;
-  background: transparent;
+:root {
+  color-scheme: dark;
 }
 
-::-webkit-scrollbar-thumb {
+#contact-me {
+  background-color: #292929;
+}
+
+html::-webkit-scrollbar {
+  background-color: transparent;
+  width: 6px;
+}
+
+html::-webkit-scrollbar-thumb {
   background: #888;
-  max-height: 4rem;
   border-radius: 6px;
 }
 
-::-webkit-scrollbar-thumb:hover {
+html::-webkit-scrollbar-thumb:hover {
   background: #555;
 }

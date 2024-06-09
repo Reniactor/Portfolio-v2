@@ -1,27 +1,24 @@
 import { nunitoSans } from "@/utils/fontIndex";
 import ProjectCard from "./projectsComponents/projectCard";
 import { projects } from "./projectIndex";
+import SectionComponent from "../sectionComponent";
+
+//Defining the basic information for this section.
+//ID defining the Ariallabeledby dynamic title,
+//H1 and H2 define the headers for this section
+const projectsInformationScaffolding = {
+  id: "projects",
+  h1: "Projects",
+  h2: "A curated collection of my most recent projects. Some may include links to the repository, while others are actual products without public access.",
+};
 
 const Projects = () => {
   return (
-    <section
-      id="projects"
-      aria-labelledby="projects-section"
-      className={`${nunitoSans.className} container mt-60 flex min-h-screen flex-col gap-8 px-4 pt-36 font-bold`}
+    <SectionComponent
+      id={projectsInformationScaffolding.id}
+      h1={projectsInformationScaffolding.h1}
+      h2={projectsInformationScaffolding.h2}
     >
-      <header className="flex flex-col gap-2 2xl:px-4">
-        <h1
-          aria-labelledby="projects-title"
-          className={` text-4xl tracking-tighter sm:text-6xl`}
-        >
-          Projects
-        </h1>
-        <h2 className="text-lg font-thin text-[#bfbfbf] sm:text-xl">
-          A curated collection of my most recent projects. Some may include
-          links to the repository, while others are actual products without
-          public access.
-        </h2>
-      </header>
       <div
         aria-labelledby="projects-cards"
         className={`${nunitoSans.className} grid grid-cols-1 place-items-center gap-8 sm:grid-cols-2 lg:grid-cols-3`}
@@ -41,7 +38,11 @@ const Projects = () => {
           );
         })}
       </div>
-    </section>
+    </SectionComponent>
   );
 };
 export default Projects;
+
+{
+  /* </section> */
+}

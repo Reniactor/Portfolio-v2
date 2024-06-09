@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import Footer from "./components/footer/footer";
 
 export const metadata = {
   openGraph: {
@@ -32,6 +33,7 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className="flex flex-col items-center bg-color60 text-color30">
         {children}
+        <Footer />
       </body>
     </html>
   );
