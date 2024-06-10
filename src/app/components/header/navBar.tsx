@@ -28,6 +28,7 @@ const routes = [
 ];
 
 //TODO add a spreadable hover colouring effect on links that also resize the letter a little bit
+//TODO not sure if that's a great idea, will ponder about it
 
 const NavBar: React.FC = () => {
   const [isToggled, setIsToggled] = useState(false);

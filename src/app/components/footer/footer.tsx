@@ -1,9 +1,16 @@
-import { nunitoSans, roboto } from "@/utils/fontIndex";
+"use client";
+import { useEffect, useState } from "react";
+import { lobster, nunitoSans, roboto } from "@/utils/fontIndex";
 import { BsGithub } from "react-icons/bs";
-import { IoMailOutline } from "react-icons/io5";
 import { SiLinkedin, SiMaildotru, SiWhatsapp } from "react-icons/si";
+import emailjs, { EmailJSResponseStatus } from "emailjs-com";
+import { NextResponse } from "next/server";
+import { env } from "@/env";
+import RandomLoadingText from "./footerComponents/randomLoadingText";
 
-const mobileToDesktopBreakPoint = "[511px]";
+const emailJsServiceId = env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+const emailJsTemplateId = env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+const emailJsUserId = env.NEXT_PUBLIC_EMAILJS_USER_ID;
 
 const iconsClasses =
   "h-full w-full hover:text-color10 transition-colors duration-300";
@@ -27,12 +34,186 @@ const socials = [
   },
 ];
 
+const dummySectionStructure = {
+  id: "dummytext-section",
+  h1: "Dummy text",
+  h2: "To give a little bit more depth to this section :). (Also, a Quotes API is a must-have, right?)",
+};
+
+interface FormState {
+  name: string;
+  email: string;
+  message: string;
+}
+
+interface DummyTextData {
+  id: string;
+  text: string;
+  source: string;
+  language: string;
+  permalink: string;
+}
+
 export default function Footer() {
+  const [form, setForm] = useState<FormState>({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [dataFetched, setDataFetched] = useState<string | null>(null);
+  const [isDataFetched, setIsDataFetched] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(
+          "https://uselessfacts.jsph.pl/api/v2/facts/random",
+          {
+            next: { revalidate: 1 },
+          },
+        );
+        if (res.ok) {
+          const data = await res.json();
+          console.log(await data);
+          setDataFetched(data.text);
+          setIsDataFetched(true);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    if (!isDataFetched) {
+      fetchData();
+    }
+  }, []);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        emailJsServiceId,
+        emailJsTemplateId,
+        e.target as HTMLFormElement,
+        emailJsUserId,
+      )
+      .then(
+        (result: EmailJSResponseStatus) => {
+          console.log(result.text);
+          alert("Message sent successfully!");
+        },
+        (error: NextResponse) => {
+          console.log(error.text);
+          alert("Failed to send the message, please try again.");
+        },
+      );
+
+    setForm({ name: "", email: "", message: "" });
+  };
+
   return (
     <footer
       id="contact-me"
-      className="mt-20 flex min-h-96 w-full items-end space-y-2 border-color60 p-6 lg:rounded-xl lg:border-[6px] lg:border-b-[6px] lg:border-l-[6px] lg:border-t-0 lg:shadow-2xl 2xl:p-8"
+      className="mt-20 flex min-h-96 w-full flex-col items-center space-y-6 border-t-4 border-color60 bg-color60 p-6 text-color30 lg:rounded-xl lg:border-0 lg:shadow-2xl 2xl:p-8"
     >
+      <div className="flex w-full max-w-7xl justify-center lg:justify-between">
+        <section
+          id={dummySectionStructure.id}
+          aria-labelledby={`${dummySectionStructure.id}-section`}
+          className={`${nunitoSans.className} container hidden max-w-lg flex-col gap-8 px-4 pt-14 font-bold lg:flex`}
+        >
+          <header className="flex flex-col gap-2 2xl:px-4">
+            <h1
+              aria-labelledby={`${dummySectionStructure.id}-title`}
+              className={`text-4xl tracking-tighter sm:text-6xl`}
+            >
+              {dummySectionStructure.h1}
+            </h1>
+            <h2 className="max-w-[36ch] text-lg font-thin text-[#bfbfbf] sm:text-xl">
+              {dummySectionStructure.h2}
+            </h2>
+          </header>
+          <h2 className={`${roboto.className} text-lg font-medium 2xl:px-4`}>
+            {isDataFetched && (
+              <>
+                <span className={`${lobster.className} text-lg`}>"</span>
+                {dataFetched}
+                <span className={`${lobster.className} text-lg`}>"</span>
+              </>
+            )}
+            {!isDataFetched && <RandomLoadingText />}
+          </h2>
+        </section>
+        <form
+          onSubmit={handleSubmit}
+          className={`${roboto.className} mt-8 w-full max-w-md rounded-lg bg-[#0f0f0f] p-6 shadow-md`}
+        >
+          <h2
+            className={`${nunitoSans.className} text-center text-2xl font-extrabold text-color30`}
+          >
+            Contact me
+          </h2>
+          <div className="mb-4">
+            <label
+              className="mb-2 block text-sm font-medium text-color30"
+              htmlFor="name"
+            >
+              Name
+            </label>
+            <input
+              type="text"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              required
+              className="w-full rounded border border-color60shade bg-color60 p-2 text-color30 outline-none"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="mb-2 block text-sm font-medium text-color30"
+              htmlFor="email"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              required
+              className="w-full rounded border border-color60shade bg-color60 p-2 text-color30 outline-none"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="mb-2 block text-sm font-medium text-color30"
+              htmlFor="message"
+            >
+              Message
+            </label>
+            <textarea
+              name="message"
+              value={form.message}
+              onChange={handleChange}
+              required
+              className="border-color60shader w-full rounded bg-color60 p-2 text-color30 outline-none"
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            className="w-full rounded bg-color30 px-4 py-2 font-bold text-color60 transition-colors duration-300 hover:bg-[#B8B8B8]"
+          >
+            Send
+          </button>
+        </form>
+      </div>
       <div
         className={`${roboto.className} flex w-full flex-wrap items-center gap-4 min-[510px]:flex-row-reverse min-[510px]:justify-end`}
       >
@@ -41,7 +222,6 @@ export default function Footer() {
           Vásquez, all rights reserved.
         </span>
         <ul className="flex gap-4">
-          {/* TODO add a form component and a copyright with Arquímedes Vásquez */}
           {socials.map(({ icon, link }, index) => {
             return (
               <li key={index} className="h-6 w-6">
