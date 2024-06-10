@@ -1,19 +1,12 @@
 "use client";
-
-import { nunitoSans, roboto } from "@/utils/fontIndex";
-import { HiChevronUpDown } from "react-icons/hi2";
 import { MdOutlineKey } from "react-icons/md";
 import { technologies as allTables } from "./technologiesIndex";
-import { FaRegCircleLeft, FaRegCircleRight } from "react-icons/fa6";
 import { FiArrowLeftCircle, FiArrowRightCircle } from "react-icons/fi";
 import { useState } from "react";
 
 import type { technology } from "./technologiesIndex";
 import Dropdown from "./Dropdown";
 import Cell from "./cell";
-
-const lighterColor60Shade = "#333333";
-const evenLighterColor60Shade = "#3D3D3D";
 
 const SQLinterface = () => {
   type TableOption = { type: string; label: string };
@@ -55,10 +48,7 @@ const SQLinterface = () => {
     setCurrentPage((prev) => prev + 1);
   };
 
-  const handlePreviousPage = (
-    currentPageNumber: number,
-    array: technology[],
-  ) => {
+  const handlePreviousPage = () => {
     if (currentStartingIndex === 0) return;
     setCurrentStartingIndex((prev) => {
       const newStartingIndex = prev - 7;
@@ -82,14 +72,6 @@ const SQLinterface = () => {
     { type: "runtime", label: "Runtime" },
     { type: "cloud", label: "Cloud" },
   ];
-
-  //Defining the different type of tables to be shown
-  const languageTable = allTables.filter((item) => item.type === "language");
-  const libraryTable = allTables.filter((item) => item.type === "library");
-  const frameworkTable = allTables.filter((item) => item.type === "framework");
-  const cloudTable = allTables.filter((item) => item.type === "cloud");
-  const databaseTable = allTables.filter((item) => item.type === "database");
-  const runtimeTable = allTables.filter((item) => item.type === "runtime");
 
   const currentItemsDisplayed = currentTable.slice(
     currentStartingIndex,
@@ -165,10 +147,10 @@ const SQLinterface = () => {
               {
                 //Mapping through the headers to
                 //dynamically assign them to each column
-                SQLInterfaceHeaders.map(({ key, name, format }) => {
+                SQLInterfaceHeaders.map(({ name, format }, index) => {
                   return (
                     <div
-                      key={key}
+                      key={index}
                       className={`${universalHeadersClassnames} select-none gap-x-2 text-sm font-medium`}
                     >
                       {name}
@@ -196,6 +178,7 @@ const SQLinterface = () => {
                     >
                       {Object.entries(item).map(([key, value], index) => (
                         <Cell
+                          key={index}
                           value={
                             index === 0
                               ? String(higherLevelIndex)
@@ -216,7 +199,7 @@ const SQLinterface = () => {
           <span className="flex items-center gap-1 text-xs font-light">
             <span
               className="h-4 w-fit hover:cursor-pointer"
-              onClick={() => handlePreviousPage(currentPage, currentTable)}
+              onClick={() => handlePreviousPage()}
             >
               <FiArrowLeftCircle className="h-full w-auto text-[#525252]" />
             </span>

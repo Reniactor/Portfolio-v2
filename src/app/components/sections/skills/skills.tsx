@@ -1,8 +1,5 @@
-import { nunitoSans, roboto } from "@/utils/fontIndex";
 import SectionComponent from "../sectionComponent";
 import SQLtable from "./skillscomponents/sqltable";
-
-const languages = ["typescript", "javascript", "solidity"];
 
 //Defining the basic information for this section.
 //ID defining the Ariallabeledby dynamic title,
