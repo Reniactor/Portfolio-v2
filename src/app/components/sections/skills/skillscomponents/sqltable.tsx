@@ -2,7 +2,7 @@
 import { MdOutlineKey } from "react-icons/md";
 import { technologies as allTables } from "./technologiesIndex";
 import { FiArrowLeftCircle, FiArrowRightCircle } from "react-icons/fi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import type { technology } from "./technologiesIndex";
 import Dropdown from "./Dropdown";
@@ -18,6 +18,12 @@ const SQLinterface = () => {
   const [currentStartingIndex, setCurrentStartingIndex] = useState(0);
   const [currentEndIndex, setCurrentEndIndex] = useState(12);
   const [currentTable, setCurrentTable] = useState(allTables);
+
+  useEffect(() => {
+    setCurrentStartingIndex(0);
+    setCurrentEndIndex(12);
+    setCurrentPage(1);
+  }, [currentTable]);
 
   const handleSelect = (option: TableOption) => {
     setSelectedTable(option);
@@ -84,7 +90,6 @@ const SQLinterface = () => {
   //Defining the static headers for each SQL table
   const SQLInterfaceHeaders = [
     {
-      key: 0,
       name: (
         <span className="flex items-center">
           <MdOutlineKey className="mr-1 h-4 w-auto text-color10" />
@@ -94,39 +99,33 @@ const SQLinterface = () => {
       format: "int",
     },
     {
-      key: 1,
       name: <span>language</span>,
       format: "text",
     },
     {
-      key: 2,
       name: <span>description</span>,
       format: "text",
     },
     {
-      key: 3,
       name: <span>status</span>,
       format: "text",
     },
     {
-      key: 4,
       name: <span>owner</span>,
       format: "text",
     },
     {
-      key: 5,
       name: <span>created_at</span>,
       format: "timestampt",
     },
     {
-      key: 6,
       name: <span>updated_at</span>,
       format: "timestampt",
     },
   ];
 
   return (
-    <div className="h-[416px] min-h-fit w-full overflow-hidden rounded-md bg-[#0f0f0f] shadow-xl">
+    <div className="h-[416px] min-h-fit w-full overflow-hidden rounded-md bg-[#0f0f0f] shadow-xl 2xl:ml-4">
       <div className="h-full w-full overflow-auto rounded-md">
         <header className="flex h-8 items-center justify-between rounded-t-lg bg-[#141414] px-4">
           <span className="flex h-6 min-w-28 items-center justify-center gap-x-2 rounded-sm border-[1px] border-[#474747] bg-[#2f2f2f] text-sm font-light">

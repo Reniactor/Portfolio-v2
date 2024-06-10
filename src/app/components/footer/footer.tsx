@@ -3,6 +3,8 @@ import { BsGithub } from "react-icons/bs";
 import { IoMailOutline } from "react-icons/io5";
 import { SiLinkedin, SiMaildotru, SiWhatsapp } from "react-icons/si";
 
+const mobileToDesktopBreakPoint = "[511px]";
+
 const iconsClasses =
   "h-full w-full hover:text-color10 transition-colors duration-300";
 
@@ -31,23 +33,31 @@ export default function Footer() {
       id="contact-me"
       className="mt-20 flex min-h-96 w-full items-end space-y-2 border-color60 p-6 lg:rounded-xl lg:border-[6px] lg:border-b-[6px] lg:border-l-[6px] lg:border-t-0 lg:shadow-2xl 2xl:p-8"
     >
-      <ul className="flex gap-4">
-        {/* TODO add a form component and a copyright with Arquímedes Vásquez */}
-        {socials.map(({ icon, link }, index) => {
-          return (
-            <li key={index} className="h-6 w-6">
-              <a
-                href={link}
-                target="_blank"
-                rel="noopener noreferrer"
-                key={index}
-              >
-                {icon}
-              </a>
-            </li>
-          );
-        })}
-      </ul>
+      <div
+        className={`${roboto.className} flex w-full flex-wrap items-center gap-4 min-[510px]:flex-row-reverse min-[510px]:justify-end`}
+      >
+        <span className="w-fit text-sm">
+          <span className="">&copy;</span> {new Date().getFullYear()} Arquímedes
+          Vásquez, all rights reserved.
+        </span>
+        <ul className="flex gap-4">
+          {/* TODO add a form component and a copyright with Arquímedes Vásquez */}
+          {socials.map(({ icon, link }, index) => {
+            return (
+              <li key={index} className="h-6 w-6">
+                <a
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  key={index}
+                >
+                  {icon}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </footer>
   );
 }
