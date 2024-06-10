@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { HiChevronUpDown } from "react-icons/hi2";
 
-type TableOption = { type: string; label: string };
+export type TableOption = { type: string; label: string };
 
 const Dropdown = ({
   options,
@@ -29,7 +29,7 @@ const Dropdown = ({
         {selected.label} <HiChevronUpDown className="h-5 w-auto p-0" />
       </div>
       {isOpen && (
-        <div className="absolute right-0 z-10 mt-1 w-fit origin-top-right rounded-md bg-[#333333] px-4 shadow-lg">
+        <div className="absolute right-0 z-10 w-fit origin-top-right rounded-b-md bg-[#333333] px-4 shadow-lg">
           <div
             className="py-1"
             role="menu"

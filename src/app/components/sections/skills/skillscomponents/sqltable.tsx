@@ -10,6 +10,7 @@ import { useState } from "react";
 
 import type { technology } from "./technologiesIndex";
 import Dropdown from "./Dropdown";
+import Cell from "./cell";
 
 const lighterColor60Shade = "#333333";
 const evenLighterColor60Shade = "#3D3D3D";
@@ -191,16 +192,16 @@ const SQLinterface = () => {
                   return (
                     <div
                       key={higherLevelIndex}
-                      className="col-span-7 row-span-1 grid h-full w-full grid-cols-7"
+                      className="col-span-7 row-span-1 grid grid-cols-7"
                     >
                       {Object.entries(item).map(([key, value], index) => (
-                        <div
-                          key={index}
-                          className="col-span-1 row-span-1 flex select-none truncate border-[1px] border-[#474747] px-4 font-thin"
-                        >
-                          {/* Will soon become Cell component */}
-                          {index === 0 ? higherLevelIndex : String(value)}
-                        </div>
+                        <Cell
+                          value={
+                            index === 0
+                              ? String(higherLevelIndex)
+                              : String(value)
+                          }
+                        />
                       ))}
                     </div>
                   );
