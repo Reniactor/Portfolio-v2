@@ -4,9 +4,9 @@ import { NextResponse } from "next/server";
 import { env } from "process";
 import { useState } from "react";
 
-const emailJsServiceId = env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-const emailJsTemplateId = env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-const emailJsUserId = env.NEXT_PUBLIC_EMAILJS_USER_ID;
+const emailJsServiceId: string = env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
+const emailJsTemplateId: string = env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
+const emailJsUserId: string = env.NEXT_PUBLIC_EMAILJS_USER_ID!;
 
 const FormComponent = () => {
   interface FormState {
@@ -31,8 +31,8 @@ const FormComponent = () => {
 
     emailjs
       .sendForm(
-        emailJsServiceId as string,
-        emailJsTemplateId as string,
+        emailJsServiceId,
+        emailJsTemplateId,
         e.target as HTMLFormElement,
         emailJsUserId,
       )
