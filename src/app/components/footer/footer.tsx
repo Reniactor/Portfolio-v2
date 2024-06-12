@@ -7,6 +7,8 @@ import emailjs, { EmailJSResponseStatus } from "emailjs-com";
 import { NextResponse } from "next/server";
 import { env } from "@/env";
 import RandomLoadingText from "./footerComponents/randomLoadingText";
+import { getRandomLoadingText } from "@/utils/getRandomLoadingText";
+import ServerGeneratedText from "./footerComponents/serverGeneratedText";
 
 const emailJsServiceId = env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
 const emailJsTemplateId = env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
@@ -54,6 +56,15 @@ interface DummyTextData {
   permalink: string;
 }
 
+export async function getServerSideProps() {
+  const loadingText = getRandomLoadingText();
+  return {
+    props: {
+      initialLoadingText: loadingText,
+    },
+  };
+}
+
 export default function Footer() {
   const [form, setForm] = useState<FormState>({
     name: "",
@@ -63,28 +74,48 @@ export default function Footer() {
   const [dataFetched, setDataFetched] = useState<string | null>(null);
   const [isDataFetched, setIsDataFetched] = useState(false);
 
+  const possibleLoadingTexts = [
+    "Asking Chat-GPT for a quote...",
+    "Not loading...",
+    "Tickling the Servers for Answers...",
+    "Convincing the Hamsters to Run Faster...",
+    "Summoning digital elves to fetch a witty quote...",
+  ];
+
+  const getRandomLoadingText = () => {
+    const randomIndex = Math.floor(Math.random() * possibleLoadingTexts.length);
+    return possibleLoadingTexts[randomIndex] as string;
+  };
+  const [isLoadingTextSet, setIsLoadingTextSet] = useState(false);
+  const [loadingText, setLoadingText] = useState<string>();
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(
-          "https://uselessfacts.jsph.pl/api/v2/facts/random",
-          {
-            next: { revalidate: 1 },
-          },
-        );
-        if (res.ok) {
+    setLoadingText(getRandomLoadingText);
+  }, [isLoadingTextSet]);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      const fetchData = async () => {
+        try {
+          const res = await fetch(
+            "https://uselessfacts.jsph.pl/api/v2/facts/random",
+            {
+              next: { revalidate: 1 },
+            },
+          );
           const data = await res.json();
-          console.log(await data);
-          setDataFetched(data.text);
-          setIsDataFetched(true);
+          if (res.ok) {
+            setDataFetched(data.text);
+            setIsDataFetched(true);
+          }
+        } catch (error) {
+          console.error(error);
         }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    if (!isDataFetched) {
+      };
       fetchData();
-    }
+    }, 2000);
+
+    return () => clearTimeout(timeoutId);
   }, []);
 
   const handleChange = (
@@ -103,16 +134,14 @@ export default function Footer() {
         e.target as HTMLFormElement,
         emailJsUserId,
       )
-      .then(
-        (result: EmailJSResponseStatus) => {
-          console.log(result.text);
-          alert("Message sent successfully!");
-        },
-        (error: NextResponse) => {
-          console.log(error.text);
-          alert("Failed to send the message, please try again.");
-        },
-      );
+      .then((result: EmailJSResponseStatus) => {
+        console.log(result.text);
+        alert("Message sent successfully!");
+      })
+      .catch((error: NextResponse) => {
+        console.log(error.text);
+        alert("Failed to send the message, please try again.");
+      });
 
     setForm({ name: "", email: "", message: "" });
   };
@@ -139,16 +168,24 @@ export default function Footer() {
               {dummySectionStructure.h2}
             </h2>
           </header>
-          <h2 className={`${roboto.className} text-lg font-medium 2xl:px-4`}>
-            {isDataFetched && (
-              <>
-                <span className={`${lobster.className} text-lg`}>"</span>
-                {dataFetched}
-                <span className={`${lobster.className} text-lg`}>"</span>
-              </>
-            )}
-            {!isDataFetched && <RandomLoadingText />}
-          </h2>
+          <div
+            className={`${roboto.className} flex flex-col text-lg font-medium 2xl:px-4`}
+          >
+            <span className={`flex gap-1 text-lg`}>
+              {isDataFetched && (
+                <div className="flex flex-col gap-4">
+                  <span>&ldquo; {dataFetched} &rdquo;</span>{" "}
+                  <h4 className="text-xs font-bold">
+                    -Some really deep philosopher i swear.
+                  </h4>
+                </div>
+              )}
+              {!isDataFetched && loadingText && (
+                <RandomLoadingText loadingText={loadingText} />
+              )}
+              {!isDataFetched && !loadingText && <h2>...</h2>}
+            </span>
+          </div>
         </section>
         <form
           onSubmit={handleSubmit}
