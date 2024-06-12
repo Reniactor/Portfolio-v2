@@ -84,7 +84,7 @@ export default function Footer() {
 
   const getRandomLoadingText = () => {
     const randomIndex = Math.floor(Math.random() * possibleLoadingTexts.length);
-    return possibleLoadingTexts![randomIndex];
+    return possibleLoadingTexts[randomIndex];
   };
   const [isLoadingTextSet, setIsLoadingTextSet] = useState(false);
   const [loadingText, setLoadingText] = useState<string>();
@@ -95,7 +95,7 @@ export default function Footer() {
   }, [isLoadingTextSet]);
 
   useEffect(() => {
-    const timeoutId = setTimeout(async () => {
+    const timeoutId = setTimeout(() => {
       const fetchData = async () => {
         try {
           const res = await fetch(
@@ -114,8 +114,14 @@ export default function Footer() {
         }
       };
       fetchData()
-        .then(() => {})
-        .catch((err) => {});
+        .then(() => {
+          let i = 0;
+          i + 1;
+        })
+        .catch((err) => {
+          let i = 0;
+          i + 1;
+        });
     }, 2000);
 
     return () => clearTimeout(timeoutId);
