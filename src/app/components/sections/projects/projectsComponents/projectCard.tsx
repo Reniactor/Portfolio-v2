@@ -24,6 +24,8 @@ const ProjectCard = ({
           className="h-60 rounded-t-md object-cover object-center"
           height={240}
           width={448}
+          layout="responsive"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </figure>
       <section
