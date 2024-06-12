@@ -22,6 +22,8 @@ const ProjectCard = ({
           src={image}
           alt={`${title} preview`}
           className="h-60 rounded-t-md object-cover object-center"
+          height={240}
+          width={448}
         />
       </figure>
       <section
