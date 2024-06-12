@@ -68,9 +68,11 @@ const NavBar: React.FC = () => {
       <div className="md:hidden">
         <button className="relative z-50 h-6 w-6" onClick={handleClick}>
           <HiOutlineMenuAlt3
+            aria-label="Open menu button"
             className={`${!isToggled ? "" : "hidden"} h-full w-full duration-500 visited:text-color10 hover:text-color10 focus:text-color10`}
           />
           <HiOutlineX
+            aria-label="Close menu button"
             className={`${!isToggled ? "hidden" : ""} h-full w-full duration-500 visited:text-color10 hover:text-color10 focus:text-color10`}
           />
         </button>
