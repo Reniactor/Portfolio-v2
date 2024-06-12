@@ -13,7 +13,7 @@ export default function AboutMe() {
             Hello! I&apos;m{" "}
           </span>
           <span
-            className={`${lobster.className} text-4xl font-bold text-color10 min-[480px]:text-5xl sm:text-6xl xl:text-8xl`}
+            className={`${lobster.className} text-4xl text-color10 min-[480px]:text-5xl sm:text-6xl xl:text-8xl`}
           >
             Arquímedes V.
           </span>{" "}
