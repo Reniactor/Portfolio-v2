@@ -59,14 +59,14 @@ const FormComponent = () => {
       </h2>
       <div className="mb-4">
         <label
-          aria-labelledby="name-input-label"
+          id="name-input-label"
           className="mb-2 block text-sm font-medium text-color30"
           htmlFor="name"
         >
           Name
         </label>
         <input
-          aria-labelledby="name-input"
+          id="name"
           type="text"
           name="name"
           value={form.name}
@@ -77,14 +77,14 @@ const FormComponent = () => {
       </div>
       <div className="mb-4">
         <label
-          aria-labelledby="email-input-label"
+          id="email-input-label"
           className="mb-2 block text-sm font-medium text-color30"
           htmlFor="email"
         >
           Email
         </label>
         <input
-          aria-labelledby="email-input"
+          id="email"
           type="email"
           name="email"
           value={form.email}
@@ -95,14 +95,14 @@ const FormComponent = () => {
       </div>
       <div className="mb-4">
         <label
-          aria-labelledby="message-textarea-label"
+          id="message-textarea-label"
           className="mb-2 block text-sm font-medium text-color30"
           htmlFor="message"
         >
           Message
         </label>
         <textarea
-          aria-labelledby="message-textarea"
+          id="message"
           name="message"
           value={form.message}
           onChange={handleChange}

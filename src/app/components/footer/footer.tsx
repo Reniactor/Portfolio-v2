@@ -12,25 +12,21 @@ const iconsClasses =
 
 const socials = [
   {
-    listAriaLabelledBy: "github-icon-list-item",
     anchorAriaLabelledBy: "github-icon-link",
     icon: <BsGithub className={iconsClasses} />,
     link: "https://github.com/Reniactor",
   },
   {
-    listAriaLabelledBy: "linkedin-icon-list-item",
     anchorAriaLabelledBy: "linkedin-icon-link",
     icon: <SiLinkedin className={iconsClasses} />,
     link: "https://www.linkedin.com/in/arquimedes-vasquez-668964238/",
   },
   {
-    listAriaLabelledBy: "whatsapp-icon-list-item",
     anchorAriaLabelledBy: "whatsapp-icon-link",
     icon: <SiWhatsapp className={iconsClasses} />,
     link: "https://wa.me/+573014393346",
   },
   {
-    listAriaLabelledBy: "mail-icon-list-item",
     anchorAriaLabelledBy: "mail-icon-link",
     icon: <SiMaildotru className={iconsClasses} />,
     link: "mailto:arquimedes_elio16@hotmail.com",
@@ -58,30 +54,21 @@ export default function Footer() {
           Vásquez, all rights reserved.
         </span>
         <ul className="flex gap-4">
-          {socials.map(
-            (
-              { listAriaLabelledBy, anchorAriaLabelledBy, icon, link },
-              index,
-            ) => {
-              return (
-                <li
-                  aria-labelledby={listAriaLabelledBy}
-                  key={index}
-                  className="h-6 w-6"
-                >
-                  <a
-                    aria-labelledby={anchorAriaLabelledBy}
-                    href={link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    key={index}
-                  >
-                    {icon}
-                  </a>
-                </li>
-              );
-            },
-          )}
+          {socials.map(({ anchorAriaLabelledBy, icon, link }, index) => (
+            <li key={index} className="h-6 w-6">
+              <a
+                aria-labelledby={`link-label-${index}`}
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span id={`link-label-${index}`} className="sr-only">
+                  {anchorAriaLabelledBy}
+                </span>
+                {icon}
+              </a>
+            </li>
+          ))}
         </ul>
       </div>
     </footer>
