@@ -91,10 +91,11 @@ export default function Footer() {
 
   useEffect(() => {
     setLoadingText(getRandomLoadingText);
+    setIsLoadingTextSet(true);
   }, [isLoadingTextSet]);
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
+    const timeoutId = setTimeout(async () => {
       const fetchData = async () => {
         try {
           const res = await fetch(
@@ -103,16 +104,16 @@ export default function Footer() {
               next: { revalidate: 1 },
             },
           );
-          const data = await res.json();
+          const data: DummyTextData = await res.json();
           if (res.ok) {
-            setDataFetched(data.text);
+            setDataFetched(data.text as string);
             setIsDataFetched(true);
           }
         } catch (error) {
           console.error(error);
         }
       };
-      fetchData();
+      await fetchData();
     }, 2000);
 
     return () => clearTimeout(timeoutId);
@@ -139,7 +140,6 @@ export default function Footer() {
         alert("Message sent successfully!");
       })
       .catch((error: NextResponse) => {
-        console.log(error.text);
         alert("Failed to send the message, please try again.");
       });
 
