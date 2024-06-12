@@ -115,11 +115,11 @@ export default function Footer() {
       };
       fetchData()
         .then(() => {
-          let i = 0;
+          const i = 0;
           i + 1;
         })
         .catch((err) => {
-          let i = 0;
+          const i = 0;
           i + 1;
         });
     }, 2000);
