@@ -4,7 +4,7 @@ import { lobster, nunitoSans, roboto } from "@/utils/fontIndex";
 import { BsGithub } from "react-icons/bs";
 import { SiLinkedin, SiMaildotru, SiWhatsapp } from "react-icons/si";
 import emailjs, { EmailJSResponseStatus } from "emailjs-com";
-import { NextResponse } from "next/server";
+import type { NextResponse } from "next/server";
 import { env } from "@/env";
 import RandomLoadingText from "./footerComponents/randomLoadingText";
 import { getRandomLoadingText } from "@/utils/getRandomLoadingText";
@@ -84,7 +84,7 @@ export default function Footer() {
 
   const getRandomLoadingText = () => {
     const randomIndex = Math.floor(Math.random() * possibleLoadingTexts.length);
-    return possibleLoadingTexts[randomIndex] as string;
+    return possibleLoadingTexts![randomIndex];
   };
   const [isLoadingTextSet, setIsLoadingTextSet] = useState(false);
   const [loadingText, setLoadingText] = useState<string>();
@@ -104,16 +104,18 @@ export default function Footer() {
               next: { revalidate: 1 },
             },
           );
-          const data: DummyTextData = await res.json();
+          const data: DummyTextData = (await res.json()) as DummyTextData;
           if (res.ok) {
-            setDataFetched(data.text as string);
+            setDataFetched(data.text);
             setIsDataFetched(true);
           }
         } catch (error) {
           console.error(error);
         }
       };
-      await fetchData();
+      fetchData()
+        .then(() => {})
+        .catch((err) => {});
     }, 2000);
 
     return () => clearTimeout(timeoutId);
