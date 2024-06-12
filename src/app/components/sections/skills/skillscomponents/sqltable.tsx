@@ -192,9 +192,9 @@ const SQLinterface = () => {
           </div>
         </div>
         <footer className="flex h-8 w-full items-center justify-between place-self-end bg-[#141414] px-4">
-          <h4 className="text-xs font-thin">
+          <h6 className="text-xs font-thin">
             {currentItemsDisplayed} items listed
-          </h4>
+          </h6>
           <span className="flex items-center gap-1 text-xs font-light">
             <span
               className="h-4 w-fit hover:cursor-pointer"

@@ -92,11 +92,14 @@ const ProjectCard = ({
             <h2 className="sr-only">
               Tech stack tags. Technologies used to build {title}
             </h2>
-            <div className="flex flex-wrap gap-1">
+            <ul
+              aria-label={`${title} tech tags`}
+              className="flex flex-wrap gap-1"
+            >
               {stack?.map((technology, index) => {
                 return <Tag key={index} techName={technology} />;
               })}
-            </div>
+            </ul>
           </section>
         </footer>
       </section>
