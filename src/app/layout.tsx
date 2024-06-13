@@ -9,7 +9,7 @@ export const metadata = {
     siteName: "Arquímedes Vásquez Portfolio",
     images: [
       {
-        url: "https://i.imgur.com/H9n6jy6.jpeg",
+        url: "https://i.imgur.com/7NWLzkk.png",
         width: 1230,
         height: 600,
         alt: "Website banner",
