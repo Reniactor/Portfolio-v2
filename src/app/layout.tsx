@@ -1,5 +1,7 @@
 import "@/styles/globals.css";
 import Footer from "./components/footer/footer";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata = {
   openGraph: {
@@ -33,6 +35,8 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className="flex flex-col items-center bg-color60 text-color30">
         {children}
+        <Analytics />
+        <SpeedInsights />
         <Footer />
       </body>
     </html>
