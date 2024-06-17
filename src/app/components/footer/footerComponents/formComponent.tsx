@@ -64,7 +64,10 @@ const FormComponent = () => {
       className={`${roboto.className} mt-8 w-full max-w-md rounded-lg bg-[#0f0f0f] p-6 shadow-md`}
     >
       <FormDialog isOpen={isDialogOpen} setIsOpen={setIsDialogOpen} />
-      <FormDialog isOpen={isErrorDialogOpen} setIsOpen={setIsErrorDialogOpen} />
+      <FormDialogError
+        isOpen={isErrorDialogOpen}
+        setIsOpen={setIsErrorDialogOpen}
+      />
       <h2
         className={`${nunitoSans.className} text-center text-2xl font-extrabold text-color30`}
       >

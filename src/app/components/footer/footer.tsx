@@ -1,9 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
-import { nunitoSans, roboto } from "@/utils/fontIndex";
+import { roboto } from "@/utils/fontIndex";
 import { BsGithub } from "react-icons/bs";
 import { SiLinkedin, SiMaildotru, SiWhatsapp } from "react-icons/si";
-import RandomLoadingText from "./footerComponents/randomLoadingText";
 import FormComponent from "./footerComponents/formComponent";
 import DummyTextSection from "./footerComponents/dummyText";
 
