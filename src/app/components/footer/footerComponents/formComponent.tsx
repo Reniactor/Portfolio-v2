@@ -1,8 +1,10 @@
+import { env } from "@/env";
 import { nunitoSans, roboto } from "@/utils/fontIndex";
 import emailjs, { EmailJSResponseStatus } from "emailjs-com";
 import { NextResponse } from "next/server";
-import { env } from "process";
 import { useState } from "react";
+import FormDialog from "./formDialog";
+import FormDialogError from "./formDialogError";
 
 const emailJsServiceId: string = env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
 const emailJsTemplateId: string = env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
@@ -19,6 +21,16 @@ const FormComponent = () => {
     email: "",
     message: "",
   });
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isErrorDialogOpen, setIsErrorDialogOpen] = useState(false);
+
+  const openDialog = () => {
+    setIsDialogOpen(true);
+  };
+  const openErrorDialog = () => {
+    setIsErrorDialogOpen(true);
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -37,11 +49,10 @@ const FormComponent = () => {
         emailJsUserId,
       )
       .then((result: EmailJSResponseStatus) => {
-        console.log(result.text);
-        alert("Message sent successfully!");
+        openDialog();
       })
       .catch((error: NextResponse) => {
-        alert("Failed to send the message, please try again.");
+        openErrorDialog();
       });
 
     setForm({ name: "", email: "", message: "" });
@@ -52,6 +63,8 @@ const FormComponent = () => {
       onSubmit={handleSubmit}
       className={`${roboto.className} mt-8 w-full max-w-md rounded-lg bg-[#0f0f0f] p-6 shadow-md`}
     >
+      <FormDialog isOpen={isDialogOpen} setIsOpen={setIsDialogOpen} />
+      <FormDialog isOpen={isErrorDialogOpen} setIsOpen={setIsErrorDialogOpen} />
       <h2
         className={`${nunitoSans.className} text-center text-2xl font-extrabold text-color30`}
       >
@@ -71,8 +84,8 @@ const FormComponent = () => {
           name="name"
           value={form.name}
           onChange={handleChange}
-          required
           className="w-full rounded border border-color60shade bg-color60 p-2 text-color30 outline-none"
+          required
         />
       </div>
       <div className="mb-4">
@@ -89,8 +102,8 @@ const FormComponent = () => {
           name="email"
           value={form.email}
           onChange={handleChange}
-          required
           className="w-full rounded border border-color60shade bg-color60 p-2 text-color30 outline-none"
+          required
         />
       </div>
       <div className="mb-4">
@@ -106,8 +119,8 @@ const FormComponent = () => {
           name="message"
           value={form.message}
           onChange={handleChange}
-          required
           className="border-color60shader w-full rounded bg-color60 p-2 text-color30 outline-none"
+          required
         ></textarea>
       </div>
       <button
