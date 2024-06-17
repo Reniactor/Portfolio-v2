@@ -6,9 +6,9 @@ import { useState } from "react";
 import FormDialog from "./formDialog";
 import FormDialogError from "./formDialogError";
 
-const emailJsServiceId: string = env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
-const emailJsTemplateId: string = env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
-const emailJsUserId: string = env.NEXT_PUBLIC_EMAILJS_USER_ID!;
+const emailJsServiceId: string = env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+const emailJsTemplateId: string = env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+const emailJsUserId: string = env.NEXT_PUBLIC_EMAILJS_USER_ID;
 
 const FormComponent = () => {
   interface FormState {

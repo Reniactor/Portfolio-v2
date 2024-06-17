@@ -67,7 +67,7 @@ const FormDialogError: React.FC<FormDialogProps> = ({ isOpen, setIsOpen }) => {
         <div className="flex w-full flex-col items-center gap-4 py-4">
           <CiCircleRemove className="h-12 w-12 text-center text-red-500" />
           <h1 id="dialogTitle" className="text-2xl font-bold text-color30">
-            There's been an error sending your message :(
+            There&apos;s been an error sending your message :(
           </h1>
           <h2 id="dialogDescription" className="text-lg text-[#BFBFBF]">
             Please try sending it again.
