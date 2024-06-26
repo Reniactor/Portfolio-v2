@@ -70,7 +70,7 @@ const FormDialog: React.FC<FormDialogProps> = ({ isOpen, setIsOpen }) => {
             Your message was sent successfully!
           </h1>
           <h2 id="dialogDescription" className="text-lg text-[#BFBFBF]">
-            I&apos;ll get it touch with you as soon as possible!
+            I&apos;ll get in touch with you as soon as possible!
           </h2>
         </div>
       </div>
