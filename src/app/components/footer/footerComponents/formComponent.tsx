@@ -122,7 +122,7 @@ const FormComponent = () => {
           name="message"
           value={form.message}
           onChange={handleChange}
-          className="border-color60shader w-full rounded bg-color60 p-2 text-color30 outline-none"
+          className="w-full rounded border-color60shade bg-color60 p-2 text-color30 outline-none"
           required
         ></textarea>
       </div>
