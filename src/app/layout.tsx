@@ -7,7 +7,7 @@ export const metadata = {
   openGraph: {
     title: "Arquímedes Vásquez | Software Developer in Bogotá",
     description: "Fullstack software developer based in Bogotá, Colombia",
-    url: "https://arquimedes-vasquez.vercel.app",
+    url: "https://arquimedesvasquez.com",
     siteName: "Arquímedes Vásquez Portfolio",
     images: [
       {
@@ -22,8 +22,11 @@ export const metadata = {
   },
   title: "Arquímedes Vásquez | Software Developer in Bogotá",
   description: "Fullstack software developer based in Bogotá, Colombia",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
-  url: "https://arquimedes-vasquez.vercel.app",
+  icons: [
+    { rel: "icon", url: "/favicon.ico", type: "image/x-icon" },
+    { rel: "shortcut icon", url: "/favicon.ico", type: "image/x-icon" },
+  ],
+  url: "https://arquimedesvasquez.com",
 };
 
 export default function RootLayout({
