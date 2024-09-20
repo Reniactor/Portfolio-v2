@@ -12,19 +12,6 @@ const projectsInformationScaffolding = {
   h2: "A curated collection of my most recent projects. Some may include links to the repository, while others are actual products without public access.",
 };
 
-/*
-Create a bot that:
-Accepts any given game and -
-Constantly checks if we're in top 1. If not, check who is.
-Try and update / beat that price. 
-If price is too low, avoid going lower.
-
-
-
-*/
-
-
-
 const Projects = () => {
   return (
     <SectionComponent

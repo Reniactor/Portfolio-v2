@@ -24,18 +24,9 @@ export type Projects = Project[];
 
 export const projects: Projects = [
   {
-    image: portfolio,
-    title: "Arquimedes Vasquez",
-    briefDescription: "My portfolio",
-    stack: ["Next.js", "Tailwindcss", "Prisma", "Supabase", "Typescript"],
-    target: "_self",
-    linkToDemo: "#about-me",
-    linkToRepo: "https://github.com/Reniactor/Portfolio-v2",
-  },
-  {
     image: flockTravels,
     title: "Flock Travels",
-    briefDescription: "Mock travel website",
+    briefDescription: "Travel Website",
     stack: ["Next.js", "Tailwindcss", "Material UI", "Typescript"],
     linkToDemo: "https://flock-travels.vercel.app",
     linkToRepo: "https://github.com/Reniactor/flock-travels",
@@ -54,5 +45,14 @@ export const projects: Projects = [
     briefDescription: "Crypto Lockdown DApp",
     stack: ["Next.js", "Firebase", "Tailwindcss", "Ethers.js", "Solidity"],
     linkToDemo: "https://digital-shield.vercel.app",
+  },
+  {
+    image: portfolio,
+    title: "Arquimedes Vasquez",
+    briefDescription: "My portfolio",
+    stack: ["Next.js", "Tailwindcss", "Prisma", "Supabase", "Typescript"],
+    target: "_self",
+    linkToDemo: "#about-me",
+    linkToRepo: "https://github.com/Reniactor/Portfolio-v2",
   },
 ];
