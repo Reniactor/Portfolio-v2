@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 import type { technology } from "./technologiesIndex";
 import Dropdown from "./Dropdown";
-import Cell from "./cell";
+import Cell from "./Cell";
 
 const SQLinterface = () => {
   type TableOption = { type: string; label: string };
@@ -175,7 +175,7 @@ const SQLinterface = () => {
                       key={higherLevelIndex}
                       className="col-span-7 row-span-1 grid grid-cols-7"
                     >
-                      {Object.entries(item).map(([key, value], index) => (
+                      {Object.entries(item).map(([_, value], index) => (
                         <Cell
                           key={index}
                           value={

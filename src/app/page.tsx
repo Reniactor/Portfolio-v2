@@ -1,7 +1,7 @@
-import NavBar from "./components/header/navBar";
-import AboutMe from "./components/sections/aboutme/aboutMe";
-import Projects from "./components/sections/projects/projects";
-import Skills from "./components/sections/skills/skills";
+import NavBar from "./modules/core/header/NavBar";
+import AboutMe from "./modules/core/sections/aboutme/AboutMe";
+import Projects from "./modules/core/sections/projects/Projects";
+import Skills from "./modules/core/sections/skills/Skills";
 
 export default function HomePage() {
   return (

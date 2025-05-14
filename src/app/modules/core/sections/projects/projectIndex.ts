@@ -3,7 +3,7 @@ import type { StaticImageData } from "next/image";
 import digitalShieldImage from "public/digitalshield.jpg";
 import flockTravels from "public/flocktravels.jpg";
 import shouldWeDineThatToday from "public/shouldwedinethattoday.jpg";
-import portfolio from "public/portfolio.jpg";
+import argengaming from "public/argengaming.jpg";
 
 // defining the interface for each Project
 
@@ -24,6 +24,21 @@ export type Projects = Project[];
 
 export const projects: Projects = [
   {
+    image: argengaming,
+    title: "ArgenGaming",
+    briefDescription: "Gaming Marketplace",
+    stack: [
+      "AWS EC2",
+      "Next.js",
+      "Tailwindcss",
+      "Supabase",
+      "Socket.io",
+      "Redis",
+      "Stripe",
+    ],
+    linkToDemo: "https://www.argengaming.com",
+  },
+  {
     image: flockTravels,
     title: "Flock Travels",
     briefDescription: "Travel Website",
@@ -34,7 +49,7 @@ export const projects: Projects = [
   {
     image: shouldWeDineThatToday,
     title: "Should we dine that today?",
-    briefDescription: "Simple roulette app",
+    briefDescription: "Roulette App",
     stack: ["Next.js", "Tailwindcss"],
     linkToDemo: "https://should-we-dine-that-today.vercel.app",
     linkToRepo: "https://github.com/Reniactor/should-we-dine-that-today",
@@ -45,14 +60,5 @@ export const projects: Projects = [
     briefDescription: "Crypto Lockdown DApp",
     stack: ["Next.js", "Firebase", "Tailwindcss", "Ethers.js", "Solidity"],
     linkToDemo: "https://digital-shield.vercel.app",
-  },
-  {
-    image: portfolio,
-    title: "Arquimedes Vasquez",
-    briefDescription: "My portfolio",
-    stack: ["Next.js", "Tailwindcss", "Prisma", "Supabase", "Typescript"],
-    target: "_self",
-    linkToDemo: "#about-me",
-    linkToRepo: "https://github.com/Reniactor/Portfolio-v2",
   },
 ];

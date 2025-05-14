@@ -1,10 +1,10 @@
 import { env } from "@/env";
 import { nunitoSans, roboto } from "@/utils/fontIndex";
-import emailjs, { EmailJSResponseStatus } from "emailjs-com";
-import { NextResponse } from "next/server";
+import emailjs, { type EmailJSResponseStatus } from "emailjs-com";
+import { type NextResponse } from "next/server";
 import { useState } from "react";
-import FormDialog from "./formDialog";
-import FormDialogError from "./formDialogError";
+import FormDialog from "./FormDialog";
+import FormDialogError from "./FormDialogError";
 
 const emailJsServiceId: string = env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
 const emailJsTemplateId: string = env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;

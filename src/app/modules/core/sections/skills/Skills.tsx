@@ -1,5 +1,5 @@
-import SectionComponent from "../sectionComponent";
-import SQLtable from "./skillscomponents/sqltable";
+import SectionComponent from "../SectionComponent";
+import SQLtable from "./components/SQLTable";
 
 //Defining the basic information for this section.
 //ID defining the Ariallabeledby dynamic title,

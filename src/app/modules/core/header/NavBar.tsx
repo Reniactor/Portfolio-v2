@@ -5,7 +5,7 @@ import Image from "next/image";
 import logo from "public/logo.png";
 import { HiOutlineMenuAlt3, HiOutlineX } from "react-icons/hi";
 import Link from "next/link";
-import SideBar from "./headerComponents/sideBar";
+import SideBar from "./components/SideBar";
 import { roboto } from "@/utils/fontIndex";
 
 const routes = [

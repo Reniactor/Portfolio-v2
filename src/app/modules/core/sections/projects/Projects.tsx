@@ -1,7 +1,7 @@
 import { nunitoSans } from "@/utils/fontIndex";
-import ProjectCard from "./projectsComponents/projectCard";
+import ProjectCard from "./components/ProjectCard";
 import { projects } from "./projectIndex";
-import SectionComponent from "../sectionComponent";
+import SectionComponent from "../SectionComponent";
 
 //Defining the basic information for this section.
 //ID defining the Ariallabeledby dynamic title,

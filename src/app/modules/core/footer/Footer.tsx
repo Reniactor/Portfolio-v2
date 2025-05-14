@@ -2,8 +2,8 @@
 import { roboto } from "@/utils/fontIndex";
 import { BsGithub } from "react-icons/bs";
 import { SiLinkedin, SiMaildotru, SiWhatsapp } from "react-icons/si";
-import FormComponent from "./footerComponents/formComponent";
-import DummyTextSection from "./footerComponents/dummyText";
+import FormComponent from "./components/FormComponent";
+import DummyTextSection from "./components/DummyText";
 
 const iconsClasses =
   "h-full w-full hover:text-color10 transition-colors duration-300";

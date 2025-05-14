@@ -1,5 +1,5 @@
 import { nunitoSans, roboto } from "@/utils/fontIndex";
-import RandomLoadingText from "./randomLoadingText";
+import RandomLoadingText from "./RandomLoadingText";
 import { useEffect, useState } from "react";
 
 const DummyTextSection = () => {

@@ -4,7 +4,7 @@ import { AiOutlineEye } from "react-icons/ai";
 import { BiCodeAlt } from "react-icons/bi";
 import type { Project } from "../projectIndex";
 import { roboto } from "@/utils/fontIndex";
-import Tag from "./tag";
+import Tag from "./Tag";
 
 const ProjectCard = ({
   image,
