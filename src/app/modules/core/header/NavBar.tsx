@@ -22,6 +22,10 @@ const routes = [
     route: "#skills",
   },
   {
+    name: "Blog",
+    route: "/blog",
+  },
+  {
     name: "Contact me",
     route: "#contact-me",
   },
@@ -40,7 +44,7 @@ const NavBar: React.FC = () => {
 
   return (
     <header className="fixed left-0 top-0 flex h-20 w-full items-center justify-between px-2 backdrop-blur-sm md:px-4">
-      <Link href={"#about-me"} className="h-full" draggable="false">
+      <Link href={"/"} className="h-full" draggable="false">
         <Image
           src={logo}
           alt="Arquímedes Logo"
@@ -49,7 +53,7 @@ const NavBar: React.FC = () => {
           priority
         />
       </Link>
-      <div className="hidden w-80 justify-between md:flex">
+      <div className="hidden w-[440px] justify-between md:flex">
         {routes.slice(1).map(({ name, route }) => {
           return (
             <div className="w-fit" key={name}>

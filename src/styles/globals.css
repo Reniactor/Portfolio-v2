@@ -23,3 +23,24 @@ html::-webkit-scrollbar-thumb {
 html::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+/* rehype-pretty-code styling */
+[data-rehype-pretty-code-figure] pre {
+  @apply overflow-x-auto rounded-lg border border-[#292929] p-4;
+}
+
+[data-rehype-pretty-code-figure] code {
+  @apply text-sm;
+}
+
+:not(pre) > code {
+  @apply rounded bg-[#2e2e2e] px-1.5 py-0.5 text-sm text-color10;
+}
+
+[data-rehype-pretty-code-figure] [data-line] {
+  @apply px-4;
+}
+
+[data-rehype-pretty-code-figure] [data-highlighted-line] {
+  @apply border-l-2 border-color10 bg-[#ffb01f]/10;
+}

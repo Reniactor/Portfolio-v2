@@ -1,0 +1,46 @@
+---
+title: "Hello World: Welcome to My Blog"
+description: "Welcome to my blog. I write about web development, building products, and things I learn along the way."
+date: "2026-03-27"
+tags: ["nextjs", "web-development", "personal"]
+published: true
+---
+
+## Introduction
+
+Hey, welcome to my blog. I've been building web apps for a while now and figured it was about time I started writing about it. Expect posts about the stuff I work on, things I learn, and the occasional deep dive into a technology I find interesting.
+
+## What I'll Write About
+
+Mostly web development. I work with **Next.js**, **NestJS**, **Supabase**, and **AWS** on a daily basis, so expect a lot of content around those. Some topics I have in mind:
+
+- Building real-time features with **Socket.io**
+- Working with **OCR and computer vision** in a field app
+- **PostgreSQL** tips from production experience
+- Deploying full-stack apps on **AWS ECS** and **Vercel**
+
+## A Quick Code Example
+
+Here's a simple server component in Next.js that fetches data at build time:
+
+```typescript
+import { db } from "@/server/db";
+
+export default async function PostsPage() {
+  const posts = await db.post.findMany({
+    orderBy: { createdAt: "desc" },
+  });
+
+  return (
+    <ul>
+      {posts.map((post) => (
+        <li key={post.id}>{post.title}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+## What's Next
+
+I'll be posting about the projects I'm working on, starting with **Greenhug**, an environmental impact platform where I built everything from OCR tree scanning to geo-spatial CO2 calculations. Stay tuned.
