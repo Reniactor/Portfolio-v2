@@ -1,4 +1,5 @@
 export type technology = {
+  id: number;
   type: string;
   language: string;
   description: string;
@@ -10,6 +11,7 @@ export type technology = {
 
 const technologies: technology[] = [
   {
+    id: 0,
     type: "language",
     language: "JavaScript",
     description:
@@ -20,6 +22,7 @@ const technologies: technology[] = [
     updatedAt: "2024-06-09",
   },
   {
+    id: 1,
     type: "language",
     language: "TypeScript",
     description:
@@ -30,6 +33,7 @@ const technologies: technology[] = [
     updatedAt: "2024-06-09",
   },
   {
+    id: 2,
     type: "language",
     language: "Solidity",
     description:
@@ -40,6 +44,7 @@ const technologies: technology[] = [
     updatedAt: "2024-05-21",
   },
   {
+    id: 3,
     type: "language",
     language: "HTML",
     description:
@@ -50,6 +55,7 @@ const technologies: technology[] = [
     updatedAt: "2008-01-22",
   },
   {
+    id: 4,
     type: "language",
     language: "CSS",
     description:
@@ -60,6 +66,7 @@ const technologies: technology[] = [
     updatedAt: "2020-12-07",
   },
   {
+    id: 5,
     type: "library",
     language: "React.js",
     description: "A JavaScript library used to build user interfaces",
@@ -69,6 +76,7 @@ const technologies: technology[] = [
     updatedAt: "2024-04-26",
   },
   {
+    id: 6,
     type: "library",
     language: "Tailwind CSS",
     description:
@@ -79,6 +87,7 @@ const technologies: technology[] = [
     updatedAt: "2024-06-05",
   },
   {
+    id: 7,
     type: "library",
     language: "Puppeteer",
     description: "A Node.js library to control headless Chrome or Chromium",
@@ -88,6 +97,7 @@ const technologies: technology[] = [
     updatedAt: "2024-05-24",
   },
   {
+    id: 8,
     type: "framework",
     language: "Next.js",
     description:
@@ -98,6 +108,7 @@ const technologies: technology[] = [
     updatedAt: "2024-06-08",
   },
   {
+    id: 9,
     type: "cloud",
     language: "Supabase",
     description:
@@ -108,6 +119,7 @@ const technologies: technology[] = [
     updatedAt: "2024-06-09",
   },
   {
+    id: 10,
     type: "cloud",
     language: "Firebase",
     description:
@@ -118,6 +130,7 @@ const technologies: technology[] = [
     updatedAt: "2024-06-09",
   },
   {
+    id: 11,
     type: "database",
     language: "MySQL",
     description: "An open-source relational database management system",
@@ -127,6 +140,7 @@ const technologies: technology[] = [
     updatedAt: "2024-04-10",
   },
   {
+    id: 12,
     type: "database",
     language: "PostgreSQL",
     description: "An open-source object-relational database management system",
@@ -136,6 +150,7 @@ const technologies: technology[] = [
     updatedAt: "2024-05-09",
   },
   {
+    id: 13,
     type: "runtime",
     language: "Node.js",
     description:
@@ -146,6 +161,7 @@ const technologies: technology[] = [
     updatedAt: "2024-05-15",
   },
   {
+    id: 14,
     type: "framework",
     language: "Express.js",
     description: "A minimalist web framework for Node.js",
@@ -155,6 +171,7 @@ const technologies: technology[] = [
     updatedAt: "2024-03-25",
   },
   {
+    id: 15,
     type: "framework",
     language: "Thirdweb",
     description: "A platform for developing decentralized web applications",
@@ -162,6 +179,66 @@ const technologies: technology[] = [
     owner: "Thirdweb",
     createdAt: "2022-08-29",
     updatedAt: "2024-06-04",
+  },
+  {
+    id: 16,
+    type: "framework",
+    language: "NestJS",
+    description: "A progressive Node.js framework for building server-side applications",
+    status: "Active",
+    owner: "Kamil Mysliwiec",
+    createdAt: "2017-10-05",
+    updatedAt: "2026-02-19",
+  },
+  {
+    id: 17,
+    type: "library",
+    language: "Prisma",
+    description: "A next-generation ORM for Node.js and TypeScript",
+    status: "Active",
+    owner: "Prisma",
+    createdAt: "2019-06-18",
+    updatedAt: "2026-03-12",
+  },
+  {
+    id: 18,
+    type: "library",
+    language: "Socket.io",
+    description: "A library for real-time bidirectional event-based communication",
+    status: "Active",
+    owner: "Socket.io",
+    createdAt: "2010-03-19",
+    updatedAt: "2025-11-07",
+  },
+  {
+    id: 19,
+    type: "cloud",
+    language: "AWS",
+    description: "Cloud computing platform with EC2, ECS, S3 and other infrastructure services",
+    status: "Active",
+    owner: "Amazon",
+    createdAt: "2006-03-14",
+    updatedAt: "2026-03-01",
+  },
+  {
+    id: 20,
+    type: "database",
+    language: "Redis",
+    description: "An in-memory data store used as a database, cache, and message broker",
+    status: "Active",
+    owner: "Redis Ltd.",
+    createdAt: "2009-05-10",
+    updatedAt: "2025-10-22",
+  },
+  {
+    id: 21,
+    type: "library",
+    language: "Stripe",
+    description: "A payment processing platform and API for online businesses",
+    status: "Active",
+    owner: "Stripe",
+    createdAt: "2011-09-29",
+    updatedAt: "2026-02-05",
   },
 ];
 

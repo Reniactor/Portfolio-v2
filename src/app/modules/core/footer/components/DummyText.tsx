@@ -62,20 +62,20 @@ const DummyTextSection = () => {
       className={`${nunitoSans.className} container hidden max-w-lg flex-col gap-8 px-4 pt-14 font-bold lg:flex`}
     >
       <header className="flex flex-col gap-2 2xl:px-4">
-        <h1
+        <h2
           aria-labelledby={`${dummySectionStructure.id}-title`}
-          className={`text-4xl tracking-tighter sm:text-6xl`}
+          className="text-4xl tracking-tighter sm:text-6xl"
         >
           {dummySectionStructure.h1}
-        </h1>
-        <h2 className="max-w-[36ch] text-lg font-thin text-[#bfbfbf] sm:text-xl">
-          {dummySectionStructure.h2}
         </h2>
+        <p className="max-w-[36ch] text-lg font-thin text-[#bfbfbf] sm:text-xl">
+          {dummySectionStructure.h2}
+        </p>
       </header>
       <div
         className={`${roboto.className} flex flex-col text-lg font-medium 2xl:px-4`}
       >
-        <span className={`flex gap-1 text-lg`}>
+        <span className="flex gap-1 text-lg">
           {isDummyTextDataFetched && (
             <div className="flex flex-col gap-4">
               <span>&ldquo; {dummyTextDataFetched} &rdquo;</span>{" "}

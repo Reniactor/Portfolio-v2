@@ -23,7 +23,7 @@ const Dropdown = ({
   return (
     <div className="relative inline-block text-left">
       <div
-        className={`flex h-5 w-28 items-center justify-center rounded-sm text-sm text-color30 transition-colors duration-300 hover:cursor-pointer hover:bg-[#333333]`}
+        className="flex h-5 w-28 items-center justify-center rounded-sm text-sm text-color30 transition-colors duration-300 hover:cursor-pointer hover:bg-[#333333]"
         onClick={() => setIsOpen(!isOpen)}
       >
         {selected.label} <HiChevronUpDown className="h-5 w-auto p-0" />

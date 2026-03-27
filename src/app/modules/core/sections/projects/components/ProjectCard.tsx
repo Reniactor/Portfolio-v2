@@ -21,10 +21,9 @@ const ProjectCard = ({
         <Image
           src={image}
           alt={`${title} preview`}
-          className="h-60 rounded-t-md object-cover object-center"
+          className="h-60 w-full rounded-t-md object-cover object-center"
           height={240}
           width={448}
-          layout="responsive"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </figure>
@@ -33,18 +32,18 @@ const ProjectCard = ({
         className="flex h-full flex-col gap-1 p-6 pb-0 sm:gap-4"
       >
         <header>
-          <h2
+          <h3
             aria-label="Project title"
             className="text-2xl font-bold text-color30"
           >
             {title}
-          </h2>
-          <h3
+          </h3>
+          <p
             aria-label={`Brief description of ${title}`}
             className={`${roboto.className} text-base font-light text-[#bfbfbf]`}
           >
             {briefDescription}
-          </h3>
+          </p>
         </header>
 
         <footer className="flex flex-col justify-around space-y-4">
@@ -93,9 +92,9 @@ const ProjectCard = ({
             aria-labelledby="tech-stack-tags"
             className="flex h-full flex-col"
           >
-            <h2 className="sr-only">
+            <h4 className="sr-only">
               Tech stack tags. Technologies used to build {title}
-            </h2>
+            </h4>
             <ul
               aria-label={`${title} tech tags`}
               className="flex flex-wrap gap-1"

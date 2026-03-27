@@ -1,9 +1,9 @@
 import type { Url } from "next/dist/shared/lib/router/router";
 import type { StaticImageData } from "next/image";
-import digitalShieldImage from "public/digitalshield.jpg";
 import flockTravels from "public/flocktravels.jpg";
 import shouldWeDineThatToday from "public/shouldwedinethattoday.jpg";
 import argengaming from "public/argengaming.jpg";
+import greenhug from "public/greenhug.png";
 
 // defining the interface for each Project
 
@@ -23,6 +23,21 @@ export type Projects = Project[];
 // in the Projects section of the portfolio.
 
 export const projects: Projects = [
+  {
+    image: greenhug,
+    title: "Greenhug",
+    briefDescription: "Environmental Impact Platform",
+    stack: [
+      "Next.js",
+      "NestJS",
+      "Tailwindcss",
+      "Supabase",
+      "Prisma",
+      "AWS ECS",
+      "Google Vision API",
+    ],
+    linkToDemo: "https://greenhug.app",
+  },
   {
     image: argengaming,
     title: "ArgenGaming",
@@ -53,12 +68,5 @@ export const projects: Projects = [
     stack: ["Next.js", "Tailwindcss"],
     linkToDemo: "https://should-we-dine-that-today.vercel.app",
     linkToRepo: "https://github.com/Reniactor/should-we-dine-that-today",
-  },
-  {
-    image: digitalShieldImage,
-    title: "Digital Shield",
-    briefDescription: "Crypto Lockdown DApp",
-    stack: ["Next.js", "Firebase", "Tailwindcss", "Ethers.js", "Solidity"],
-    linkToDemo: "https://digital-shield.vercel.app",
   },
 ];

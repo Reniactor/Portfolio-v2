@@ -66,12 +66,12 @@ const FormDialog: React.FC<FormDialogProps> = ({ isOpen, setIsOpen }) => {
         </button>
         <div className="flex w-full flex-col items-center gap-4 py-4">
           <CiCircleCheck className="h-12 w-12 text-center text-green-500" />
-          <h1 id="dialogTitle" className="text-2xl font-bold text-color30">
+          <h2 id="dialogTitle" className="text-2xl font-bold text-color30">
             Your message was sent successfully!
-          </h1>
-          <h2 id="dialogDescription" className="text-lg text-[#BFBFBF]">
-            I&apos;ll get in touch with you as soon as possible!
           </h2>
+          <p id="dialogDescription" className="text-lg text-[#BFBFBF]">
+            I&apos;ll get in touch with you as soon as possible!
+          </p>
         </div>
       </div>
     </div>

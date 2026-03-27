@@ -46,7 +46,7 @@ const NavBar: React.FC = () => {
           alt="Arquímedes Logo"
           className="h-full w-auto"
           draggable="false"
-          loading="lazy"
+          priority
         />
       </Link>
       <div className="hidden w-80 justify-between md:flex">
