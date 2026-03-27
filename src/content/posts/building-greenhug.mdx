@@ -1,0 +1,154 @@
+---
+title: "Building Greenhug: OCR, GPS, and CO2 Math in a Reforestation Platform"
+description: "How I built a full-stack platform that tracks tree planting campaigns with computer vision, geo-spatial calculations, and offline-first field tools."
+date: "2026-03-27"
+tags: ["nextjs", "nestjs", "supabase", "aws", "ocr", "prisma"]
+published: true
+---
+
+## What is Greenhug?
+
+Greenhug is a full-stack platform for tracking and gamifying corporate reforestation. Organizations use it to run tree planting campaigns, track tree health through field scanning, and measure their environmental impact with real data.
+
+I built both the frontend and backend from scratch. The frontend runs on **Next.js 14** with the App Router, and the backend is a **NestJS** API with **Prisma** on top of **PostgreSQL** (Supabase). The whole thing is deployed on **AWS ECS** (backend), **Vercel** (frontend), and **Supabase** (database, auth, and storage).
+
+The project ended up being pretty large. 49 database models, 92+ API endpoints in the reforestation module alone, and three independent business modules sharing the same infrastructure.
+
+## Scanning Trees with OCR
+
+This was probably the most interesting part to build. Field workers (called "brigadistas") go out and plant trees, then scan identification tags attached to each tree using their phone camera.
+
+Under the hood, the scanned photo gets sent to **Google Cloud Vision API** for OCR. But it's not just about reading text from an image. I also needed to:
+
+- Extract **EXIF metadata** from the photo (GPS coordinates, device info, timestamp)
+- Handle **HEIC/HEIF** formats from iPhones, which most backends don't support out of the box
+- Compress images on the client before uploading (field connectivity is unreliable)
+- Set a **70% confidence threshold** on the OCR result, with a manual fallback if it fails
+
+The result is a workflow where a brigadista points their camera at a tree tag, the system reads the code, grabs the GPS location from the photo, and registers it all in one step.
+
+```typescript
+// Simplified version of the OCR validation logic
+const ocrResult = await visionClient.textDetection(imageBuffer);
+const detectedText = ocrResult[0]?.fullTextAnnotation?.text ?? "";
+
+if (confidence >= 0.7) {
+  await registerTree({
+    code: detectedText.trim(),
+    gps: extractGpsFromExif(exifData),
+    eventId,
+    brigadistaId,
+  });
+} else {
+  // Queue for manual verification
+  await queueManualReview({ imageUrl, detectedText, confidence });
+}
+```
+
+## Calculating CO2 and Hectares from GPS Data
+
+Every tree that gets registered has GPS coordinates attached. From those coordinates, I calculate two things: how much CO2 the trees are capturing and how many hectares have been reforested.
+
+### CO2 Sequestration
+
+Each tree's CO2 capture is calculated with this formula:
+
+```
+CO2 (kg) = 0.116 * wood_density * diameter^2 * height
+```
+
+The values come from the tree species data and measurements taken during field visits. Nothing fancy in the code, but getting the formula right and tying it to real field data was the tricky part.
+
+### Hectares Reforested
+
+This one was more fun. Given a set of tree GPS coordinates, I needed to figure out the area they cover. I used a **convex hull** algorithm (Graham scan) to find the outer boundary of the planted trees, then applied the **Shoelace formula** to compute the area of that polygon.
+
+```typescript
+// Graham scan to find convex hull of tree coordinates
+function convexHull(points: GpsPoint[]): GpsPoint[] {
+  const sorted = points.sort((a, b) => a.lng - b.lng || a.lat - b.lat);
+  const lower: GpsPoint[] = [];
+  const upper: GpsPoint[] = [];
+
+  for (const p of sorted) {
+    while (lower.length >= 2 && cross(lower[lower.length - 2]!, lower[lower.length - 1]!, p) <= 0)
+      lower.pop();
+    lower.push(p);
+  }
+
+  for (const p of sorted.reverse()) {
+    while (upper.length >= 2 && cross(upper[upper.length - 2]!, upper[upper.length - 1]!, p) <= 0)
+      upper.pop();
+    upper.push(p);
+  }
+
+  return [...lower.slice(0, -1), ...upper.slice(0, -1)];
+}
+
+// Shoelace formula to calculate polygon area
+function shoelaceArea(hull: GpsPoint[]): number {
+  let area = 0;
+  for (let i = 0; i < hull.length; i++) {
+    const j = (i + 1) % hull.length;
+    area += hull[i]!.lng * hull[j]!.lat;
+    area -= hull[j]!.lng * hull[i]!.lat;
+  }
+  return Math.abs(area) / 2;
+}
+```
+
+I also track GPS accuracy per reading. The UI color-codes it: green if accuracy is under 5 meters, amber between 5 and 15, red above 15. This matters because bad GPS data would throw off the area calculations.
+
+## Multi-Role Architecture
+
+Greenhug has 5 user roles, each seeing different data:
+
+- **Super Admin** sees everything across all organizations
+- **Admin Corporativo** sees their organization's events and KPIs
+- **Socio Regional** sees their assigned territories
+- **Brigadista** sees their field assignments and tree scanning tools
+- **Voluntario** sees events they can participate in
+
+Every single database query enforces organization isolation. No user can ever see data from another organization, even if they somehow hit the right API endpoint. This is enforced at the Prisma query level, not just in the frontend.
+
+## Offline-First Field Tools
+
+The brigadista field app had to work in areas with bad or no connectivity. I built it as a **PWA with a service worker** that queues tree registrations locally and syncs them when the device gets back online.
+
+The flow is:
+1. Brigadista scans a tree tag (camera + OCR)
+2. If online, it registers immediately
+3. If offline, it stores the scan data locally
+4. When connectivity returns, the queue auto-syncs everything
+
+This was critical because planting events happen in rural areas where cell service is spotty at best.
+
+## Three Modules, One Codebase
+
+Greenhug isn't just about trees. The platform has three independent business modules:
+
+- **EXP (Reforestation):** The main module. Territories, zones, trees, activities, events, teams, invitations, voting. 92+ endpoints, 19 database models.
+- **LIFE (Sustainable Apparel):** Order lifecycle tracking with timeline entries, size management, and inventory.
+- **UPC (Circular Economy):** Batch processing, collection addresses, product tracking, and recycling reports.
+
+All three share the same NestJS backend, Prisma schema, and authentication layer. The frontend routes them into separate dashboard sections.
+
+## What I Learned
+
+A few takeaways from building this:
+
+- **OCR is unreliable.** Always have a fallback. The 70% confidence threshold saved us from a lot of bad data.
+- **GPS accuracy matters more than you think.** A 20-meter error on every tree reading compounds fast when you're calculating area from hundreds of points.
+- **Offline-first is hard but worth it.** Building the sync queue added a lot of complexity, but without it the field app would've been useless in half the locations it's used.
+- **Multi-tenancy needs to be enforced at the data layer.** Relying on frontend checks for org isolation is asking for trouble.
+
+## The Stack
+
+For reference, here's the full tech stack:
+
+- **Frontend:** Next.js 14, React 18, TypeScript, Tailwind, shadcn/ui, TanStack React Query, Zustand, Recharts, Socket.io-client
+- **Backend:** NestJS, TypeScript, Prisma ORM, Supabase Auth & Storage, Google Cloud Vision API, Socket.io, Nodemailer, Sharp, PDF-lib
+- **Database:** PostgreSQL (Supabase), 49 models across 4 domain modules
+- **Infrastructure:** AWS ECS (API), Vercel (Frontend), Supabase (DB + Auth + Storage)
+
+You can check it out at [greenhug.app](https://greenhug.app).

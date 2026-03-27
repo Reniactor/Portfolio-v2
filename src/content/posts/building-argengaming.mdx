@@ -1,0 +1,196 @@
+---
+title: "ArgenGaming: Building a Gaming Marketplace from Scratch"
+description: "How I built a gaming marketplace with real-time features, multi-gateway payments, fraud detection, and support for 80+ games."
+date: "2026-03-27"
+tags: ["nextjs", "socket-io", "stripe", "redis", "supabase", "prisma"]
+published: true
+---
+
+## What is ArgenGaming?
+
+ArgenGaming is a digital marketplace for gaming assets. Think game currencies, accounts, rare items, and boosting services. Buyers browse listings, pay through whatever method works for them (credit card, crypto, or regional payment options), and sellers deliver the goods. The platform handles escrow, disputes, verification, and everything in between.
+
+I built the whole thing on **Next.js 15** with **TypeScript**, backed by **PostgreSQL** through **Prisma ORM**. The Prisma schema alone is 1,752 lines across 49+ models. The app has 289+ API routes, real-time messaging with **Socket.io**, and supports three languages out of the box.
+
+## Real-Time Infrastructure
+
+A marketplace where buyers and sellers need to coordinate deliveries can't rely on page refreshes. I set up **Socket.io** with a **Redis adapter** (Upstash) so the real-time layer scales across multiple server instances.
+
+The Redis adapter is key here. Without it, if user A connects to server instance 1 and user B connects to instance 2, they can't see each other's messages. Redis acts as the pub/sub bridge between instances.
+
+```typescript
+import { Server } from "socket.io";
+import { createAdapter } from "@socket.io/redis-adapter";
+import { createClient } from "redis";
+
+const pubClient = createClient({ url: process.env.REDIS_URL });
+const subClient = pubClient.duplicate();
+
+await Promise.all([pubClient.connect(), subClient.connect()]);
+
+const io = new Server(server, {
+  adapter: createAdapter(pubClient, subClient),
+  cors: { origin: process.env.NEXT_PUBLIC_APP_URL },
+});
+
+io.on("connection", (socket) => {
+  socket.on("join-order", (orderId: string) => {
+    socket.join(`order:${orderId}`);
+  });
+
+  socket.on("order-message", ({ orderId, message }) => {
+    io.to(`order:${orderId}`).emit("new-message", message);
+  });
+});
+```
+
+This powers order chat, live status updates, and admin notifications. When a seller marks an order as delivered, the buyer sees it instantly without polling.
+
+## Payment Processing Across Multiple Gateways
+
+This was one of the harder parts. ArgenGaming serves users across Latin America, so a single payment provider wasn't going to cut it. I integrated four gateways:
+
+- **Stripe** for credit/debit cards
+- **Triple A** for crypto payments
+- **Coinbase Commerce** as a second crypto option
+- **KamiPay** for regional payment methods specific to LatAm
+
+Each gateway has its own webhook format, its own status flow, and its own edge cases. I built a unified payment layer that normalizes everything into a single order status pipeline.
+
+```typescript
+// Simplified webhook handler routing
+export async function POST(req: Request) {
+  const provider = req.headers.get("x-payment-provider");
+
+  switch (provider) {
+    case "stripe":
+      return handleStripeWebhook(req);
+    case "triple-a":
+      return handleTripleAWebhook(req);
+    case "coinbase":
+      return handleCoinbaseWebhook(req);
+    case "kamipay":
+      return handleKamiPayWebhook(req);
+    default:
+      return NextResponse.json({ error: "Unknown provider" }, { status: 400 });
+  }
+}
+
+// Each handler maps to the same internal status
+async function handleStripeWebhook(req: Request) {
+  const event = stripe.webhooks.constructEvent(/* ... */);
+
+  const statusMap: Record<string, OrderStatus> = {
+    "payment_intent.succeeded": "PAID",
+    "payment_intent.payment_failed": "PAYMENT_FAILED",
+    "charge.refunded": "REFUNDED",
+  };
+
+  await updateOrderStatus(event.metadata.orderId, statusMap[event.type]);
+}
+```
+
+The tricky part isn't the happy path. It's handling partial payments, expired sessions, double webhook deliveries, and currency conversion. Every gateway has different retry behavior, so I added idempotency keys to make sure an order doesn't get processed twice.
+
+## Security and Fraud Prevention
+
+A gaming marketplace attracts fraud. People try to pay with stolen cards, use VPNs to mask their location, or create multiple accounts for referral abuse. I built several layers of defense.
+
+### IP Fraud Detection
+
+Every significant action (registration, purchase, payout request) runs the user's IP through **IPQS (IP Quality Score)**. It checks for VPN usage, TOR exit nodes, open proxies, and recent abuse history.
+
+```typescript
+const ipCheck = await ipqs.check(userIp);
+
+if (ipCheck.vpn || ipCheck.tor || ipCheck.recent_abuse) {
+  await flagUser(userId, {
+    reason: "SUSPICIOUS_IP",
+    details: {
+      vpn: ipCheck.vpn,
+      tor: ipCheck.tor,
+      proxy: ipCheck.proxy,
+      fraud_score: ipCheck.fraud_score,
+    },
+  });
+}
+
+// High fraud score blocks the transaction outright
+if (ipCheck.fraud_score >= 85) {
+  throw new ForbiddenException("Transaction blocked for security reasons.");
+}
+```
+
+### Multi-Tier User Verification
+
+Users go through progressive verification levels:
+
+1. **Email verification** (basic access)
+2. **Phone verification** via **Twilio** SMS
+3. **Document verification** (government ID upload + selfie holding the ID)
+
+Higher verification unlocks higher transaction limits. An unverified account can browse but can't sell. A fully verified account gets access to higher payout limits and priority support.
+
+## The Loyalty System: Argenpuntos
+
+I wanted to give users a reason to stick around. Argenpuntos is a points system where users earn rewards for purchases, referrals, and platform activity. Points can be redeemed for discounts on future transactions.
+
+The referral piece works through unique invite codes. When someone signs up with your code and makes their first purchase, both parties earn points. I track the full referral chain in the database to prevent circular referrals and abuse.
+
+This kind of gamification loop keeps users engaged. A buyer who's 50 points away from a discount is more likely to come back than one who has no reason to.
+
+## Internationalization from Day One
+
+ArgenGaming supports **English, Spanish, and Portuguese** through **next-intl**. I set this up from the start rather than retrofitting it later, which saved a lot of pain.
+
+Every user-facing string goes through the translation system. Prices display in the user's local currency. Dates follow locale conventions. The URL structure uses language prefixes (`/en/`, `/es/`, `/pt/`).
+
+```typescript
+// Middleware handles locale detection and routing
+import createMiddleware from "next-intl/middleware";
+
+export default createMiddleware({
+  locales: ["en", "es", "pt"],
+  defaultLocale: "en",
+  localeDetection: true,
+});
+```
+
+Setting up i18n early is one of those things that doesn't feel urgent but becomes a nightmare if you try to add it after you already have 200+ pages of hardcoded strings.
+
+## The Admin Panel
+
+Running a marketplace means dealing with disputes, verifying users, and monitoring transactions. The admin panel covers all of that:
+
+- **Order management** with full status history and audit trails
+- **User verification queue** for reviewing document uploads
+- **Transaction monitoring** with flags for suspicious activity
+- **Payout management** for processing seller withdrawals
+
+Every admin action gets logged with who did it and when. If a moderator overrides a dispute, there's a record of it. This matters both for internal accountability and for cases where users dispute decisions.
+
+## What I Learned
+
+A few things that stuck with me after building this:
+
+- **Start with i18n, not later.** Adding translations to an existing app with hundreds of components is brutal. Doing it from day one costs almost nothing extra.
+- **Payment webhooks are the real product.** The checkout flow is maybe 20% of the payment work. The other 80% is handling every edge case that webhooks throw at you: retries, out-of-order events, partial payments, and provider downtime.
+- **Fraud prevention is an arms race.** Every time you block one pattern, people find another way. Layering multiple signals (IP reputation, verification level, transaction velocity) works better than any single check.
+- **Redis makes Socket.io production-ready.** Without the Redis adapter, you're stuck on a single server instance. With it, horizontal scaling just works.
+
+## The Stack
+
+For reference, here's the full tech stack:
+
+- **Frontend:** Next.js 15, React 18, TypeScript, Tailwind, Zustand, Framer Motion
+- **Backend:** PostgreSQL, Prisma ORM (49+ models), NextAuth.js
+- **Real-time:** Socket.io with Redis adapter (Upstash)
+- **Payments:** Stripe, Triple A, Coinbase Commerce, KamiPay
+- **Storage:** Supabase
+- **Communication:** Intercom, Mailgun, Twilio, Discord webhooks
+- **Security:** IPQS fraud detection, multi-document verification
+- **i18n:** next-intl (English, Spanish, Portuguese)
+- **Monitoring:** Vercel Analytics, Google Analytics, Meta Pixel
+- **Deployment:** Vercel, AWS EC2
+
+You can check it out at [argengaming.com](https://argengaming.com).
