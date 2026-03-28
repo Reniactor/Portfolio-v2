@@ -53,8 +53,9 @@ This powers order chat, live status updates, and admin notifications. When a sel
 This was one of the harder parts. ArgenGaming serves users across Latin America, so a single payment provider wasn't going to cut it. I integrated multiple gateways:
 
 - **Triple A** for crypto payments
-- **Coinbase Commerce** as a second crypto option
+- **CoinPayments** as a second crypto option
 - **KamiPay** for regional payment methods specific to LatAm
+- **Tazapay** for escrow-based transactions
 
 Each gateway has its own webhook format, its own status flow, and its own edge cases. I built a unified payment layer that normalizes everything into a single order status pipeline.
 
@@ -177,7 +178,7 @@ For reference, here's the full tech stack:
 - **Frontend:** Next.js 15, React 19, TypeScript, Tailwind, Zustand, Framer Motion
 - **Backend:** PostgreSQL, Prisma ORM (49+ models), NextAuth.js
 - **Real-time:** Socket.io with Redis adapter (Upstash)
-- **Payments:** Triple A, Coinbase Commerce, KamiPay
+- **Payments:** Triple A, CoinPayments, KamiPay, Tazapay
 - **Storage:** Supabase
 - **Communication:** Intercom, Mailgun, Twilio, Discord webhooks
 - **Security:** IPQS fraud detection
