@@ -10,7 +10,9 @@ published: true
 
 ArgenGaming is a digital marketplace for gaming assets. Think game currencies, accounts, rare items, and boosting services. Buyers browse listings, pay through whatever method works for them (credit card, crypto, or regional payment options), and sellers deliver the goods. The platform handles escrow, disputes, verification, and everything in between.
 
-I built the whole thing on **Next.js 15** with **TypeScript**, backed by **PostgreSQL** through **Prisma ORM**. The Prisma schema alone is 1,752 lines across 49+ models. The app has 289+ API routes, real-time messaging with **Socket.io**, and supports three languages out of the box.
+I originally built the whole thing on **Next.js 14** with **TypeScript**, backed by **PostgreSQL** through **Prisma ORM**. The Prisma schema alone is 1,752 lines across 49+ models. The app has 289+ API routes, real-time messaging with **Socket.io**, and supports three languages out of the box.
+
+Recently I had to migrate to **Next.js 15** because of **React2Shell** (CVE-2025-55182), the CVSS 10.0 RCE vulnerability that hit React Server Components in December 2025. An unsafe deserialization flaw in the RSC Flight data-handling logic meant that an attacker could execute arbitrary server-side code with no authentication required. For a marketplace handling real money and user data, that's not something you sit on. The patch only covered React 19.x, so upgrading Next.js was the only path forward.
 
 ## Real-Time Infrastructure
 
@@ -177,6 +179,7 @@ A few things that stuck with me after building this:
 - **Payment webhooks are the real product.** The checkout flow is maybe 20% of the payment work. The other 80% is handling every edge case that webhooks throw at you: retries, out-of-order events, partial payments, and provider downtime.
 - **Fraud prevention is an arms race.** Every time you block one pattern, people find another way. Layering multiple signals (IP reputation, verification level, transaction velocity) works better than any single check.
 - **Redis makes Socket.io production-ready.** Without the Redis adapter, you're stuck on a single server instance. With it, horizontal scaling just works.
+- **Keep your framework up to date.** React2Shell was a wake-up call. A CVSS 10.0 RCE in React Server Components meant I had to drop everything and migrate from Next.js 14 to 15. Having good test coverage and a clean codebase made that migration survivable, but it still wasn't fun.
 
 ## The Stack
 
