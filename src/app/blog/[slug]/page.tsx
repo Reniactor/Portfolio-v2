@@ -6,6 +6,7 @@ import { getPostBySlug, getAllSlugs } from "@/lib/blog/mdx";
 import { mdxComponents } from "@/app/modules/blog/components/MdxComponents";
 import TableOfContents from "@/app/modules/blog/components/TableOfContents";
 import BackLink from "@/app/modules/blog/components/BackLink";
+import ViewCounter from "@/app/modules/blog/components/ViewCounter";
 import { nunitoSans, roboto } from "@/utils/fontIndex";
 
 interface Props {
@@ -96,6 +97,8 @@ export default async function BlogPostPage({ params }: Props) {
           </time>
           <span className="text-[#555]">|</span>
           <span>{post.readingTime}</span>
+          <span className="text-[#555]">|</span>
+          <ViewCounter slug={params.slug} />
         </div>
         {post.frontmatter.tags.length > 0 && (
           <ul className="mt-4 flex flex-wrap gap-1.5">
