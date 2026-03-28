@@ -2,17 +2,17 @@
 title: "ArgenGaming: Building a Gaming Marketplace from Scratch"
 description: "How I built a gaming marketplace with real-time features, multi-gateway payments, fraud detection, and support for 80+ games."
 date: "2026-03-27"
-tags: ["nextjs", "socket-io", "stripe", "redis", "supabase", "prisma"]
+tags: ["nextjs", "socket-io", "redis", "supabase", "prisma", "crypto"]
 published: true
 ---
 
 ## What is ArgenGaming?
 
-ArgenGaming is a digital marketplace for gaming assets. Think game currencies, accounts, rare items, and boosting services. Buyers browse listings, pay through whatever method works for them (credit card, crypto, or regional payment options), and sellers deliver the goods. The platform handles escrow, disputes, verification, and everything in between.
+ArgenGaming is a digital marketplace for gaming assets that I built for a client. Think game currencies, accounts, rare items, and boosting services. Buyers browse listings, pay through whatever method works for them (crypto or regional payment options), and sellers deliver the goods. The platform handles escrow, disputes, verification, and everything in between.
 
-I originally built the whole thing on **Next.js 14** with **TypeScript**, backed by **PostgreSQL** through **Prisma ORM**. The Prisma schema alone is 1,752 lines across 49+ models. The app has 289+ API routes, real-time messaging with **Socket.io**, and supports three languages out of the box.
+I built it on **Next.js 14** with **TypeScript**, backed by **PostgreSQL** through **Prisma ORM**. The Prisma schema alone is 1,752 lines across 49+ models. The app has 289+ API routes, real-time messaging with **Socket.io**, and supports English and Spanish.
 
-Recently I had to migrate to **Next.js 15** because of **React2Shell** (CVE-2025-55182), the CVSS 10.0 RCE vulnerability that hit React Server Components in December 2025. An unsafe deserialization flaw in the RSC Flight data-handling logic meant that an attacker could execute arbitrary server-side code with no authentication required. For a marketplace handling real money and user data, that's not something you sit on. The patch only covered React 19.x, so upgrading Next.js was the only path forward.
+Recently I had to migrate to **Next.js 15** because of **React2Shell** (CVE-2025-55182), the CVSS 10.0 RCE vulnerability that hit React Server Components in December 2025. An unsafe deserialization flaw in the RSC Flight data-handling logic meant that an attacker could execute arbitrary server-side code with no authentication required. For a marketplace handling real money and user data, that's not something you sit on. The patch only covered React 19.x, so upgrading was the only path forward.
 
 ## Real-Time Infrastructure
 
@@ -50,9 +50,8 @@ This powers order chat, live status updates, and admin notifications. When a sel
 
 ## Payment Processing Across Multiple Gateways
 
-This was one of the harder parts. ArgenGaming serves users across Latin America, so a single payment provider wasn't going to cut it. I integrated four gateways:
+This was one of the harder parts. ArgenGaming serves users across Latin America, so a single payment provider wasn't going to cut it. I integrated multiple gateways:
 
-- **Stripe** for credit/debit cards
 - **Triple A** for crypto payments
 - **Coinbase Commerce** as a second crypto option
 - **KamiPay** for regional payment methods specific to LatAm
@@ -123,19 +122,9 @@ if (ipCheck.fraud_score >= 85) {
 }
 ```
 
-### Multi-Tier User Verification
-
-Users go through progressive verification levels:
-
-1. **Email verification** (basic access)
-2. **Phone verification** via **Twilio** SMS
-3. **Document verification** (government ID upload + selfie holding the ID)
-
-Higher verification unlocks higher transaction limits. An unverified account can browse but can't sell. A fully verified account gets access to higher payout limits and priority support.
-
 ## The Loyalty System: Argenpuntos
 
-I wanted to give users a reason to stick around. Argenpuntos is a points system where users earn rewards for purchases, referrals, and platform activity. Points can be redeemed for discounts on future transactions.
+The client wanted a way to keep users coming back. Argenpuntos is a points system where users earn rewards for purchases, referrals, and platform activity. Points can be redeemed for discounts on future transactions.
 
 The referral piece works through unique invite codes. When someone signs up with your code and makes their first purchase, both parties earn points. I track the full referral chain in the database to prevent circular referrals and abuse.
 
@@ -143,16 +132,16 @@ This kind of gamification loop keeps users engaged. A buyer who's 50 points away
 
 ## Internationalization from Day One
 
-ArgenGaming supports **English, Spanish, and Portuguese** through **next-intl**. I set this up from the start rather than retrofitting it later, which saved a lot of pain.
+ArgenGaming supports **English and Spanish** through **next-intl**. I set this up from the start rather than retrofitting it later, which saved a lot of pain.
 
-Every user-facing string goes through the translation system. Prices display in the user's local currency. Dates follow locale conventions. The URL structure uses language prefixes (`/en/`, `/es/`, `/pt/`).
+Every user-facing string goes through the translation system. Prices display in the user's local currency. Dates follow locale conventions. The URL structure uses language prefixes (`/en/`, `/es/`).
 
 ```typescript
 // Middleware handles locale detection and routing
 import createMiddleware from "next-intl/middleware";
 
 export default createMiddleware({
-  locales: ["en", "es", "pt"],
+  locales: ["en", "es"],
   defaultLocale: "en",
   localeDetection: true,
 });
@@ -185,14 +174,14 @@ A few things that stuck with me after building this:
 
 For reference, here's the full tech stack:
 
-- **Frontend:** Next.js 15, React 18, TypeScript, Tailwind, Zustand, Framer Motion
+- **Frontend:** Next.js 15, React 19, TypeScript, Tailwind, Zustand, Framer Motion
 - **Backend:** PostgreSQL, Prisma ORM (49+ models), NextAuth.js
 - **Real-time:** Socket.io with Redis adapter (Upstash)
-- **Payments:** Stripe, Triple A, Coinbase Commerce, KamiPay
+- **Payments:** Triple A, Coinbase Commerce, KamiPay
 - **Storage:** Supabase
 - **Communication:** Intercom, Mailgun, Twilio, Discord webhooks
-- **Security:** IPQS fraud detection, multi-document verification
-- **i18n:** next-intl (English, Spanish, Portuguese)
+- **Security:** IPQS fraud detection
+- **i18n:** next-intl (English, Spanish)
 - **Monitoring:** Vercel Analytics, Google Analytics, Meta Pixel
 - **Deployment:** Vercel, AWS EC2
 
